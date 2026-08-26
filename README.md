@@ -46,48 +46,23 @@
 
 ---
 
-## 🏗️ Architecture & Data Flow
+## 🏗️ Architecture
 
 ```mermaid
-flowchart TD
-    %% Black & White Monochrome Style Definition
-    classDef primary fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000;
-    classDef highlight fill:#000000,stroke:#000000,stroke-width:2px,color:#ffffff;
+flowchart LR
+    %% Black & White Minimalist Architecture
+    classDef dark fill:#000000,stroke:#000000,stroke-width:2px,color:#ffffff;
+    classDef light fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000;
     classDef soft fill:#f4f4f5,stroke:#000000,stroke-width:1.5px,color:#000000;
-    classDef dashed fill:#ffffff,stroke:#000000,stroke-width:1.5px,stroke-dasharray: 4 4,color:#000000;
 
-    User([👤 DPO / Compliance Officer<br>Initiates Evaluation]):::highlight --> UI[💻 Next.js 15 Web Application<br>Rule Trace Studio & Incident Cockpit]:::primary
-
-    subgraph STEP1 ["1. INPUT DATA & CRM PORTFOLIO"]
-        UI --> Contacts[📊 CRM Customer Contacts<br>Consent, Retention & Notice Logs]:::soft
-    end
-
-    subgraph STEP2 ["2. DETERMINISTIC DPDP RULE ENGINE"]
-        Contacts --> Engine[⚙️ Core Rule Evaluator<br>Executes Controls DPDP-001 to 005]:::primary
-        Engine --> Score[💯 Score Calculator<br>100 Base Score - Deduction Matrix]:::soft
-        Score --> Gate{⚖️ Severity Gate<br>Critical / High Violations?}:::primary
-    end
-
-    subgraph STEP3 ["3. PERSISTENCE & CRYPTOGRAPHIC LEDGER"]
-        Gate -->|"Store Verdict"| DB[(🗄️ PostgreSQL Database<br>Prisma ORM Indexed Tables)]:::primary
-        Gate -->|"Emit Audit Log"| Ledger[(🔒 SHA-256 Audit Ledger<br>Merkle Checkpoint Verification)]:::primary
-    end
-
-    subgraph STEP4 ["4. READ-ONLY AI EXPLAINER LAYER"]
-        DB -.->|"Read Verdict Metadata Only<br>Zero Direct PII Transmission"| AI[🤖 Mistral AI Assistant<br>Generates Plain-Language Briefing]:::soft
-        AI -.->|"Network Offline Fallback"| Fallback[📄 Deterministic Fallback<br>Rule-Cited Action Playbooks]:::dashed
-    end
-
-    subgraph STEP5 ["5. HUMAN-IN-THE-LOOP GOVERNANCE"]
-        AI --> Portal[🔍 Fix Impact Simulator<br>Non-Mutating Blast Radius Preview]:::primary
-        Fallback --> Portal
-        Portal --> Decision{👮 DPO Approval Gate<br>Approve or Reject Fix?}:::highlight
-        Decision -->|"Approved"| Sync[⚡ Automated CRM Remediation<br>Update Consent / Prune Expired Data]:::primary
-        Decision -->|"Rejected"| Dismiss[❌ Request Dismissed & Logged]:::soft
-    end
+    User([👤 DPO / Analyst]):::dark --> Web[💻 Next.js 15 Portal<br>Dashboard & Trace Studio]:::light
+    Web --> Engine[⚙️ Deterministic Rule Engine<br>Evaluates 5 DPDP Controls]:::light
+    Engine --> DB[(🗄️ PostgreSQL + SHA-256<br>Audit Ledger & Verdicts)]:::soft
+    DB --> AI[🤖 Mistral AI Assistant<br>Read-Only Verdict Briefings]:::light
+    AI --> Approval([👮 Human Approval Gate<br>Remediation Sync to CRM]):::dark
 ```
 
-> **Core System Invariant:**  
+> **Core Invariant:**  
 > 🔒 **The Rule Engine Decides, AI Explains, and Humans Approve.**  
 > *AI models operate strictly on persisted metadata in read-only mode and are mathematically isolated from calculating scores, modifying compliance states, or triggering remediation actions.*
 
