@@ -34,7 +34,7 @@ ComplyLens is a DPDP compliance-operations layer for privacy and CRM teams. It c
 | Closure condition | Both Board and affected-person notification evidence must be logged |
 | Stack | Next.js 15, React 19, strict TypeScript, Prisma, PostgreSQL, Mistral, Zod, Vitest |
 | Live demo | https://complylens.onrender.com/login |
-| Repository | https://github.com/nischala755/salesforce |
+| Repository | https://github.com/VedantVH/SalesForce |
 
 ---
 

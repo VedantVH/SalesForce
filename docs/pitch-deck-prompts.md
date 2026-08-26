@@ -107,13 +107,13 @@ flowchart LR
 - SHA-256 chain, Merkle checkpoint, CSV and JSON proof artifacts
 - 32 automated tests + production/browser verification
 
-Source: `https://github.com/nischala755/salesforce`
+Source: `https://github.com/VedantVH/SalesForce`
 
 Live: `https://complylens.onrender.com/login`
 
 ### Layout instruction
 
-> Design the final slide like an editorial product proof page, not an AI-generated pitch slide. Use one large, real ComplyLens dashboard screenshot across the left 64% of the canvas, cropped cleanly with no laptop, browser, phone, perspective mockup, glow, gradient or floating card. In the right column, set the seven supplied artifacts as compact black text separated by thin rules; use no icons, badges or invented claims. Along the bottom, place the supplied high-resolution QR files side by side: `public/complylens-github-qr.png` labelled “SOURCE” and `public/complylens-live-qr.png` labelled “LIVE PRODUCT”. Keep each QR at least 3 cm wide with a clear white quiet zone, and print its full URL directly below it: `https://github.com/nischala755/salesforce` and `https://complylens.onrender.com/login`. End with the quiet sentence “From fragmented evidence to reproducible decisions and human-approved remediation.” Add “Operational aid—not legal certification or legal advice” in a small source footer. Use an off-white background, near-black text, one deep teal accent, left alignment, generous whitespace and a single restrained sans-serif family. Do not include credentials, passwords or API keys.
+> Design the final slide like an editorial product proof page, not an AI-generated pitch slide. Use one large, real ComplyLens dashboard screenshot across the left 64% of the canvas, cropped cleanly with no laptop, browser, phone, perspective mockup, glow, gradient or floating card. In the right column, set the seven supplied artifacts as compact black text separated by thin rules; use no icons, badges or invented claims. Along the bottom, place the supplied high-resolution QR files side by side: `public/complylens-github-qr.png` labelled “SOURCE” and `public/complylens-live-qr.png` labelled “LIVE PRODUCT”. Keep each QR at least 3 cm wide with a clear white quiet zone, and print its full URL directly below it: `https://github.com/VedantVH/SalesForce` and `https://complylens.onrender.com/login`. End with the quiet sentence “From fragmented evidence to reproducible decisions and human-approved remediation.” Add “Operational aid—not legal certification or legal advice” in a small source footer. Use an off-white background, near-black text, one deep teal accent, left alignment, generous whitespace and a single restrained sans-serif family. Do not include credentials, passwords or API keys.
 
 ## Final rejection checklist
 

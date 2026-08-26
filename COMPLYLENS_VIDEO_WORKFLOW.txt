@@ -892,7 +892,7 @@ ACTION 102
 Time: 5:25–5:45
 Do: Place the GitHub QR code beside the live QR.
 Label: SOURCE CODE
-URL: https://github.com/nischala755/salesforce
+URL: https://github.com/VedantVH/SalesForce
 Asset: public/complylens-github-qr.png
 Expected: QR code is at least 3 cm wide with its white quiet zone intact.
 
