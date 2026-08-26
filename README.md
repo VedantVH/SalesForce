@@ -3,6 +3,7 @@
 > **Enterprise DPDP Act (2023) Compliance Automation & Cryptographic Governance Engine**  
 > *Developed as part of the **Salesforce Compass Program***
 
+[![Salesforce Compass](https://img.shields.io/badge/Salesforce-Compass%20Program-00A1E0?style=for-the-badge&logo=salesforce)](https://developer.salesforce.com/)
 [![Next.js](https://img.shields.io/badge/Next.js-15.5-black?style=for-the-badge&logo=nextdotjs)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.1-blue?style=for-the-badge&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
@@ -45,84 +46,32 @@
 
 ---
 
-## 🏗️ Architecture & Data Flow
+## 🏗️ Architecture
 
 ```mermaid
 flowchart TD
-    %% Styling Classes
-    classDef source fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
-    classDef engine fill:#0f172a,stroke:#818cf8,stroke-width:2px,color:#f8fafc;
-    classDef db fill:#1e1e2e,stroke:#34d399,stroke-width:2px,color:#f8fafc;
-    classDef ai fill:#2d1537,stroke:#f472b6,stroke-width:2px,color:#f8fafc;
-    classDef ui fill:#0c4a6e,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
-    classDef gate fill:#451a03,stroke:#fb923c,stroke-width:2px,color:#f8fafc;
+    User([DPO / Privacy Engineer<br>Initiates Assessment / Trace]) --> UI[Next.js 15 Web Application<br>React 19 & Tailwind CSS v4]
+    UI --> API[Next.js API & Server Actions<br>Zod Validation & JOSE Auth]
 
-    subgraph INGESTION["1. INGESTION & DATA SOURCES"]
-        CRM["📊 CRM Contact Records"]:::source
-        CONSENT["📝 Consent Logs & Notice Timestamps"]:::source
-        PURPOSE["🎯 Processing Purpose Registry"]:::source
-    end
+    API --> Engine[Deterministic Rule Engine<br>Evaluates Controls DPDP-001 to 005]
+    Engine --> Gate{Severity Gating & Scorer<br>100 Base - Deduction Matrix}
 
-    subgraph ENGINE["2. DETERMINISTIC DPDP RULE ENGINE (Core Execution)"]
-        NORM["Typed Evidence Normalizer"]:::engine
-        R1["DPDP-001: Consent Validity"]:::engine
-        R2["DPDP-002: Purpose Limitation"]:::engine
-        R3["DPDP-003: Retention Limits"]:::engine
-        R4["DPDP-004: Notice Delivery"]:::engine
-        R5["DPDP-005: Data Minimization"]:::engine
-        SCORE["Scoring Engine (100 Base - Deductions)"]:::engine
-        GATE{"Severity Gate Check\n(Critical/High Failures?)"}:::gate
-    end
+    Gate --> DB[(PostgreSQL Database<br>Prisma ORM & Connection Pool)]
+    Gate --> Audit[(Cryptographic Ledger<br>SHA-256 Chain & Merkle Proofs)]
 
-    subgraph PERSISTENCE["3. PERSISTENCE & CRYPTOGRAPHIC LEDGER"]
-        DB[("PostgreSQL Database\n(Prisma ORM)")]:::db
-        SERIAL["Serialized Transaction Lock"]:::db
-        CHAIN["SHA-256 Block Hash Chaining\n(H_n = Hash(H_n-1 + Entry))"]:::db
-        MERKLE["Merkle Checkpoint Sealer\n& Inclusion Proof Generator"]:::db
-    end
+    DB --> AI[Mistral AI Service<br>Zero-PII Persisted Verdict Briefings]
+    DB --> Sim[Fix Impact Simulator<br>Non-Mutating Blast Radius Projection]
 
-    subgraph AI_LAYER["4. EVIDENCE-GROUNDED AI EXPLAINER (Read-Only)"]
-        MISTRAL["Mistral AI API\n(Server-Side Isolation)"]:::ai
-        FALLBACK["Deterministic Fallback Generator"]:::ai
-        ZOD["Zod Schema Guard\n(Strict JSON Parsing)"]:::ai
-    end
+    AI -.->|Offline Fallback| Fallback[Deterministic Fallback Engine<br>Rule-Cited Action Playbooks]
 
-    subgraph PORTAL["5. DPO GOVERNANCE & COMMAND COCKPIT"]
-        TRACE["🔬 Rule Trace Studio\n(Live Sandbox)"]:::ui
-        SIM["🔄 Fix Impact Simulator\n(Non-Mutating)"]:::ui
-        DPO{"👮 DPO Dual-Custody Approval"}:::gate
-        SYNC["⚡ CRM External Sync & Remediation Dispatch"]:::ui
-        INCIDENT["🚨 Incident & Breach Command\n(72h CERT-In / 144h Target)"]:::ui
-    end
+    AI --> Studio[Rule Trace & Governance Studio<br>Trace Matrix & Executive Insights]
+    Fallback --> Studio
+    Sim --> Studio
 
-    %% Ingestion to Engine
-    CRM --> NORM
-    CONSENT --> NORM
-    PURPOSE --> NORM
-    NORM --> R1 & R2 & R3 & R4 & R5
-    R1 & R2 & R3 & R4 & R5 --> SCORE
-    SCORE --> GATE
-
-    %% Engine to Persistence
-    GATE -->|"Persist Verdict\n(Append-Only)"| DB
-    GATE -->|"Emit Audit Event"| SERIAL
-    SERIAL --> CHAIN --> MERKLE --> DB
-
-    %% Persistence to AI & UI
-    DB -.->|"Read Verdict Metadata Only\n(Zero Direct PII)"| MISTRAL
-    MISTRAL --> ZOD
-    MISTRAL -.->|"Network Timeout / Error"| FALLBACK
-    FALLBACK --> ZOD
-
-    %% Governance Portal Interaction
-    DB --> TRACE & SIM & INCIDENT
-    ZOD -->|"Structured Executive Briefing"| TRACE
-    SIM -->|"Remediation Proposal"| DPO
-    DPO -->|"Approved"| SYNC
-    DPO -->|"Rejected"| DB
+    Studio --> Action([DPO Approval Gate<br>Human-in-the-Loop Remediation])
 ```
 
-> **Core System Invariant:**  
+> **Core Invariant:**  
 > 🔒 **The Rule Engine Decides, AI Explains, and Humans Approve.**  
 > *AI models operate strictly on persisted metadata in read-only mode and are mathematically isolated from calculating scores, modifying compliance states, or triggering remediation actions.*
 
