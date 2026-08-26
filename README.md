@@ -1,7 +1,9 @@
 # ComplyLens
 
-> **Enterprise DPDP Act (2023) Compliance Automation & Cryptographic Governance Engine**
+> **Enterprise DPDP Act (2023) Compliance Automation & Cryptographic Governance Engine**  
+> *Developed as part of the **Salesforce Compass Program***
 
+[![Salesforce Compass](https://img.shields.io/badge/Salesforce-Compass%20Program-00A1E0?style=for-the-badge&logo=salesforce)](https://developer.salesforce.com/)
 [![Next.js](https://img.shields.io/badge/Next.js-15.5-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.1-blue?style=for-the-badge&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
@@ -16,7 +18,7 @@
 
 ## 📌 Overview
 
-**ComplyLens** is an enterprise data protection orchestration platform engineered to automate evaluations against India's **Digital Personal Data Protection (DPDP) Act, 2023**. Built with a strict **zero-trust architecture**, it separates mathematical compliance evaluation from generative intelligence: **the deterministic engine decides, AI explains, and human operators approve**. The platform provides compliance teams, Data Protection Officers (DPOs), and privacy engineers with real-time risk scoring, reproducible rule traces, cryptographic audit integrity, and human-in-the-loop remediation.
+**ComplyLens** is an enterprise data protection orchestration platform engineered to automate evaluations against India's **Digital Personal Data Protection (DPDP) Act, 2023**, developed as part of the **Salesforce Compass Program**. Built with a strict **zero-trust architecture**, it separates mathematical compliance evaluation from generative intelligence: **the deterministic engine decides, AI explains, and human operators approve**. The platform provides compliance teams, Data Protection Officers (DPOs), and privacy engineers with real-time risk scoring, reproducible rule traces, cryptographic audit integrity, and human-in-the-loop remediation.
 
 ---
 
@@ -155,7 +157,7 @@ npm run smoke:browser
 
 ## 👥 Contributors
 
-- **[Vedant Vishwanath Honnangi](https://github.com/VedantVH)** — Architecture, Full-Stack Engineering, Rule Engine & AI Orchestration
+- **[Vedant Vishwanath Honnangi](https://github.com/VedantVH)** — Architecture, Full-Stack Engineering, Rule Engine & AI Orchestration (Salesforce Compass Program)
 
 ---
 
