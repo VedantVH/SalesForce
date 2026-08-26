@@ -48,44 +48,59 @@
 
 ## 🏗️ Architecture & Project Flow
 
-### 1. System Flow Diagram
+### 1. System Architecture Diagram
 
 ```mermaid
 flowchart TD
-    UI[Web Dashboard UI<br>Next.js 15 / React 19] --> Controller[API Controllers & Server Actions<br>Zod Schema Validation]
-    AI[Mistral AI Explainer<br>Read-Only Verdict Briefings] --> Controller
+    UI[Next.js 15 Web Application<br>React 19 Dashboard, Trace Studio & Incident Cockpit] --> API[Next.js API Route Handlers<br>Session Guard, RBAC & Zod Validation]
+    
+    API --> Assess[Assessment Service<br>Batch Orchestration & Transaction Manager]
+    API --> Sim[Simulation & Remediation<br>Impact Forecasting & State Machine]
+    API --> AI[AI Explainer Service<br>Mistral API with Deterministic Fallback]
+    API --> AuditServ[Audit Integrity Service<br>Chain Verification & Merkle Checkpoints]
 
-    Controller --> Service[Core Service Layer<br>Compliance & Simulation Services]
-
-    Service <-->|Final Score & Status| Engine[Deterministic Rule Engine<br>DPDP-001 to 005 Controls]
-    Service --> Audit[Audit Trail Logger<br>SHA-256 Hash Chaining]
-
-    Service -->|Persisted Records| DB[(Database<br>PostgreSQL / Prisma ORM)]
-    Audit --> DB
+    Assess <--> Engine[Deterministic Rule Engine<br>DPDP-001 to DPDP-005 Pure Functional Evaluator]
+    
+    Assess --> DB[(PostgreSQL Database<br>Prisma ORM Indexed Tables)]
+    Sim --> DB
+    AuditServ --> DB
+    
+    Assess --> AuditLog[SHA-256 Audit Logger<br>Serialized Hash Chaining]
+    AuditLog --> DB
+    
+    DB -.->|Read-Only Verdict Metadata| AI
 ```
 
-### 2. Assessment Sequence
+### 2. Assessment & Governance Sequence
 
 ```mermaid
 sequenceDiagram
     autonumber
-    participant UI as Web UI / DPO
-    participant Controller as API Controller
-    participant Service as Compliance Service
-    participant Engine as DPDP Rule Engine
-    participant DB as PostgreSQL DB
+    participant DPO as DPO / Privacy Officer
+    participant API as API Handler (/api/assessments/run)
+    participant Service as Assessment Service (lib/assessments)
+    participant Engine as Rules Engine (lib/rules-engine)
+    participant DB as PostgreSQL Database
+    participant Audit as SHA-256 Audit Logger (lib/audit)
+    participant AI as Mistral AI (/api/ai/explain)
 
-    UI->>Controller: Initiate runAssessment(names)
-    Controller->>Service: runAssessment(assessmentName)
-    Service->>DB: Query Contacts & Active Rules
-    DB-->>Service: Return Contact Evidence Records
-    Service->>Engine: evaluate(rules, contacts)
-    Engine-->>Service: Return Rule Results, Scores & Fail Reasons
-    Service->>DB: Insert Compliance Assessment & Result Records
-    Service->>DB: Insert Compliance Recommendation Records
-    Service->>DB: Insert SHA-256 Chained Audit Log Entry
-    Service-->>Controller: Return Assessment ID & Summary
-    Controller-->>UI: Return Assessment Results & AI Briefing
+    DPO->>API: POST /api/assessments/run (contactIds)
+    API->>Service: runAssessments(contactIds, actorId)
+    Service->>DB: Fetch Contacts, Consents, Purposes & Active Rule Versions
+    DB-->>Service: Return Normalized Contact Evidence
+    Service->>Engine: assessContact(evidence, ruleVersions)
+    Engine-->>Service: Deterministic Scores, Severity Gate & Recommendations
+    Service->>DB: Transactional INSERT (Assessment, Results, Recommendations)
+    Service->>Audit: writeAudit(action, actorId, sequence)
+    Audit->>DB: Compute & Store SHA-256 Chained Hash
+    Service-->>API: Return Assessment Results
+    API-->>DPO: Render Results on Dashboard
+    
+    opt Generate AI Briefing
+        DPO->>AI: POST /api/ai/explain (verdictMetadata)
+        AI->>DB: Read Persisted Verdict (Zero PII)
+        AI-->>DPO: Return Structured Briefing & Remediation Playbook
+    end
 ```
 
 > **Core Invariant:**  
@@ -165,12 +180,6 @@ npm run smoke:browser
 - **Cryptographic Auditability:** Guarantees append-only tamper detection through serialized SHA-256 hash chaining and exportable Merkle inclusion proofs.
 - **Strict Separation of Concerns:** Architecturally isolates LLM reasoning from state mutation, ensuring all remediation actions require human-in-the-loop approval.
 - **Comprehensive Test Coverage:** Backed by 6 automated test suites covering authentication security, cryptographic hashing, rule engine boundaries, fix simulations, and browser workflows.
-
----
-
-## 👥 Contributors
-
-- **[Vedant Vishwanath Honnangi](https://github.com/VedantVH)** — Architecture, Full-Stack Engineering, Rule Engine & AI Orchestration (Salesforce Compass Program)
 
 ---
 
