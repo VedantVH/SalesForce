@@ -46,32 +46,48 @@
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture & Data Flow
 
 ```mermaid
 flowchart TD
-    User([DPO / Privacy Engineer<br>Initiates Assessment / Trace]) --> UI[Next.js 15 Web Application<br>React 19 & Tailwind CSS v4]
-    UI --> API[Next.js API & Server Actions<br>Zod Validation & JOSE Auth]
+    %% Black & White Monochrome Style Definition
+    classDef primary fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000;
+    classDef highlight fill:#000000,stroke:#000000,stroke-width:2px,color:#ffffff;
+    classDef soft fill:#f4f4f5,stroke:#000000,stroke-width:1.5px,color:#000000;
+    classDef dashed fill:#ffffff,stroke:#000000,stroke-width:1.5px,stroke-dasharray: 4 4,color:#000000;
 
-    API --> Engine[Deterministic Rule Engine<br>Evaluates Controls DPDP-001 to 005]
-    Engine --> Gate{Severity Gating & Scorer<br>100 Base - Deduction Matrix}
+    User([👤 DPO / Compliance Officer<br>Initiates Evaluation]):::highlight --> UI[💻 Next.js 15 Web Application<br>Rule Trace Studio & Incident Cockpit]:::primary
 
-    Gate --> DB[(PostgreSQL Database<br>Prisma ORM & Connection Pool)]
-    Gate --> Audit[(Cryptographic Ledger<br>SHA-256 Chain & Merkle Proofs)]
+    subgraph STEP1 ["1. INPUT DATA & CRM PORTFOLIO"]
+        UI --> Contacts[📊 CRM Customer Contacts<br>Consent, Retention & Notice Logs]:::soft
+    end
 
-    DB --> AI[Mistral AI Service<br>Zero-PII Persisted Verdict Briefings]
-    DB --> Sim[Fix Impact Simulator<br>Non-Mutating Blast Radius Projection]
+    subgraph STEP2 ["2. DETERMINISTIC DPDP RULE ENGINE"]
+        Contacts --> Engine[⚙️ Core Rule Evaluator<br>Executes Controls DPDP-001 to 005]:::primary
+        Engine --> Score[💯 Score Calculator<br>100 Base Score - Deduction Matrix]:::soft
+        Score --> Gate{⚖️ Severity Gate<br>Critical / High Violations?}:::primary
+    end
 
-    AI -.->|Offline Fallback| Fallback[Deterministic Fallback Engine<br>Rule-Cited Action Playbooks]
+    subgraph STEP3 ["3. PERSISTENCE & CRYPTOGRAPHIC LEDGER"]
+        Gate -->|"Store Verdict"| DB[(🗄️ PostgreSQL Database<br>Prisma ORM Indexed Tables)]:::primary
+        Gate -->|"Emit Audit Log"| Ledger[(🔒 SHA-256 Audit Ledger<br>Merkle Checkpoint Verification)]:::primary
+    end
 
-    AI --> Studio[Rule Trace & Governance Studio<br>Trace Matrix & Executive Insights]
-    Fallback --> Studio
-    Sim --> Studio
+    subgraph STEP4 ["4. READ-ONLY AI EXPLAINER LAYER"]
+        DB -.->|"Read Verdict Metadata Only<br>Zero Direct PII Transmission"| AI[🤖 Mistral AI Assistant<br>Generates Plain-Language Briefing]:::soft
+        AI -.->|"Network Offline Fallback"| Fallback[📄 Deterministic Fallback<br>Rule-Cited Action Playbooks]:::dashed
+    end
 
-    Studio --> Action([DPO Approval Gate<br>Human-in-the-Loop Remediation])
+    subgraph STEP5 ["5. HUMAN-IN-THE-LOOP GOVERNANCE"]
+        AI --> Portal[🔍 Fix Impact Simulator<br>Non-Mutating Blast Radius Preview]:::primary
+        Fallback --> Portal
+        Portal --> Decision{👮 DPO Approval Gate<br>Approve or Reject Fix?}:::highlight
+        Decision -->|"Approved"| Sync[⚡ Automated CRM Remediation<br>Update Consent / Prune Expired Data]:::primary
+        Decision -->|"Rejected"| Dismiss[❌ Request Dismissed & Logged]:::soft
+    end
 ```
 
-> **Core Invariant:**  
+> **Core System Invariant:**  
 > 🔒 **The Rule Engine Decides, AI Explains, and Humans Approve.**  
 > *AI models operate strictly on persisted metadata in read-only mode and are mathematically isolated from calculating scores, modifying compliance states, or triggering remediation actions.*
 
