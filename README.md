@@ -45,38 +45,86 @@
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture & Data Flow
 
-```text
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                              INCOMING DATA                                  │
-│         (CRM Contacts, Data Subject Requests, Audit Events)                 │
-└──────────────────────────────────────┬──────────────────────────────────────┘
-                                       │
-                                       ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                    DETERMINISTIC RULE ENGINE (TypeScript)                    │
-│   • Typed Evidence Normalization     • DPDP Control Evaluation              │
-│   • Mathematical Deduction Matrix    • Severity Gates & Versioned Rules     │
-└──────────────────┬──────────────────────────────────────┬───────────────────┘
-                   │ (Persisted Verdict)                  │ (Audit Event)
-                   ▼                                      ▼
-┌──────────────────────────────────────┐  ┌───────────────────────────────────┐
-│       MISTRAL AI BRIEFING LAYER       │  │   CRYPTOGRAPHIC AUDIT LOG ENGINE  │
-│  • Reads ONLY Persisted Metadata     │  │  • Serialized Transaction Locks   │
-│  • Explains Findings & Next Actions  │  │  • SHA-256 Block Chaining         │
-│  • Deterministic Offline Fallback    │  │  • Merkle Checkpoint Inclusion    │
-└──────────────────┬───────────────────┘  └───────────────────┬───────────────┘
-                   │                                          │
-                   └──────────────────┬───────────────────────┘
-                                      ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                      DPO GOVERNANCE & APPROVAL PORTAL                        │
-│          (Rule Trace Studio • Fix Simulator • Remediation Dispatch)         │
-└─────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    %% Styling Classes
+    classDef source fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+    classDef engine fill:#0f172a,stroke:#818cf8,stroke-width:2px,color:#f8fafc;
+    classDef db fill:#1e1e2e,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+    classDef ai fill:#2d1537,stroke:#f472b6,stroke-width:2px,color:#f8fafc;
+    classDef ui fill:#0c4a6e,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+    classDef gate fill:#451a03,stroke:#fb923c,stroke-width:2px,color:#f8fafc;
+
+    subgraph INGESTION["1. INGESTION & DATA SOURCES"]
+        CRM["📊 CRM Contact Records"]:::source
+        CONSENT["📝 Consent Logs & Notice Timestamps"]:::source
+        PURPOSE["🎯 Processing Purpose Registry"]:::source
+    end
+
+    subgraph ENGINE["2. DETERMINISTIC DPDP RULE ENGINE (Core Execution)"]
+        NORM["Typed Evidence Normalizer"]:::engine
+        R1["DPDP-001: Consent Validity"]:::engine
+        R2["DPDP-002: Purpose Limitation"]:::engine
+        R3["DPDP-003: Retention Limits"]:::engine
+        R4["DPDP-004: Notice Delivery"]:::engine
+        R5["DPDP-005: Data Minimization"]:::engine
+        SCORE["Scoring Engine (100 Base - Deductions)"]:::engine
+        GATE{"Severity Gate Check\n(Critical/High Failures?)"}:::gate
+    end
+
+    subgraph PERSISTENCE["3. PERSISTENCE & CRYPTOGRAPHIC LEDGER"]
+        DB[("PostgreSQL Database\n(Prisma ORM)")]:::db
+        SERIAL["Serialized Transaction Lock"]:::db
+        CHAIN["SHA-256 Block Hash Chaining\n(H_n = Hash(H_n-1 + Entry))"]:::db
+        MERKLE["Merkle Checkpoint Sealer\n& Inclusion Proof Generator"]:::db
+    end
+
+    subgraph AI_LAYER["4. EVIDENCE-GROUNDED AI EXPLAINER (Read-Only)"]
+        MISTRAL["Mistral AI API\n(Server-Side Isolation)"]:::ai
+        FALLBACK["Deterministic Fallback Generator"]:::ai
+        ZOD["Zod Schema Guard\n(Strict JSON Parsing)"]:::ai
+    end
+
+    subgraph PORTAL["5. DPO GOVERNANCE & COMMAND COCKPIT"]
+        TRACE["🔬 Rule Trace Studio\n(Live Sandbox)"]:::ui
+        SIM["🔄 Fix Impact Simulator\n(Non-Mutating)"]:::ui
+        DPO{"👮 DPO Dual-Custody Approval"}:::gate
+        SYNC["⚡ CRM External Sync & Remediation Dispatch"]:::ui
+        INCIDENT["🚨 Incident & Breach Command\n(72h CERT-In / 144h Target)"]:::ui
+    end
+
+    %% Ingestion to Engine
+    CRM --> NORM
+    CONSENT --> NORM
+    PURPOSE --> NORM
+    NORM --> R1 & R2 & R3 & R4 & R5
+    R1 & R2 & R3 & R4 & R5 --> SCORE
+    SCORE --> GATE
+
+    %% Engine to Persistence
+    GATE -->|"Persist Verdict\n(Append-Only)"| DB
+    GATE -->|"Emit Audit Event"| SERIAL
+    SERIAL --> CHAIN --> MERKLE --> DB
+
+    %% Persistence to AI & UI
+    DB -.->|"Read Verdict Metadata Only\n(Zero Direct PII)"| MISTRAL
+    MISTRAL --> ZOD
+    MISTRAL -.->|"Network Timeout / Error"| FALLBACK
+    FALLBACK --> ZOD
+
+    %% Governance Portal Interaction
+    DB --> TRACE & SIM & INCIDENT
+    ZOD -->|"Structured Executive Briefing"| TRACE
+    SIM -->|"Remediation Proposal"| DPO
+    DPO -->|"Approved"| SYNC
+    DPO -->|"Rejected"| DB
 ```
 
-> **Core Invariant:** *The rule engine decides, AI explains, and humans approve. Generative models operate with read-only access to persisted verdict metadata and cannot alter compliance scores, mutate records, or apply remediation without explicit human authorization.*
+> **Core System Invariant:**  
+> 🔒 **The Rule Engine Decides, AI Explains, and Humans Approve.**  
+> *AI models operate strictly on persisted metadata in read-only mode and are mathematically isolated from calculating scores, modifying compliance states, or triggering remediation actions.*
 
 ---
 
