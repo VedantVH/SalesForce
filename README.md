@@ -16,37 +16,35 @@
 
 ## 📌 Overview
 
-**ComplyLens** is an enterprise data protection orchestration platform engineered to automate evaluations against India's **Digital Personal Data Protection (DPDP) Act, 2023**. Built with a strict **zero-trust architecture**, it separates mathematical compliance evaluation from generative intelligence: **the deterministic engine decides, AI explains, and human operators approve**.
-
-The system features real-time risk scoring, an interactive **Rule Trace Studio**, cryptographic **SHA-256 Merkle audit chains**, non-destructive **remediation simulation**, and an **incident command center** for privacy and security officers.
+**ComplyLens** is an enterprise data protection orchestration platform engineered to automate evaluations against India's **Digital Personal Data Protection (DPDP) Act, 2023**. Built with a strict **zero-trust architecture**, it separates mathematical compliance evaluation from generative intelligence: **the deterministic engine decides, AI explains, and human operators approve**. The platform provides compliance teams, Data Protection Officers (DPOs), and privacy engineers with real-time risk scoring, reproducible rule traces, cryptographic audit integrity, and human-in-the-loop remediation.
 
 ---
 
 ## ✨ Key Features
 
-- **⚡ Deterministic DPDP Compliance Engine:** Evaluates contact portfolios across 5 versioned controls (**Consent, Purpose, Retention, Notice, Minimization**) with mathematical scoring (100-point scale) and zero AI hallucination risk.
-- **🔬 Interactive Rule Trace Studio:** Real-time, no-write sandbox enabling Data Protection Officers (DPOs) to toggle evidence parameters, inspect per-control trace matrices, and export reproducible scenario fingerprints.
-- **🤖 Evidence-Grounded AI Briefings:** Server-isolated **Mistral AI integration** generates actionable executive summaries grounded exclusively in persisted verdict metadata, backed by an instant deterministic fallback engine.
-- **🛡️ Tamper-Evident Cryptographic Auditing:** Append-only audit log with serialized **SHA-256 hash chaining**, database transaction locking, **Merkle checkpoint proofs**, and exportable portable JSON bundles.
-- **🔄 Non-Mutating Remediation Simulation:** Forecasts organizational score impact and blast radius before applying human-approved fixes (e.g., consent re-engagement, purpose limitation, data pruning).
-- **🚨 Incident & Breach Command Cockpit:** Centralized incident tracker with statutory notification SLAs (72h CERT-In / 144h internal), evidence management, CSV compliance export, and SDF operational review.
+- **⚡ Deterministic Rule Engine:** Evaluates contact portfolios against 5 versioned DPDP controls (**Consent, Purpose, Retention, Notice, Minimization**) on a 100-point scale with zero AI hallucination risk in scoring.
+- **🔬 Interactive Rule Trace Studio:** Real-time, no-write sandbox enabling DPOs to toggle evidence parameters, inspect per-control trace matrices, and export reproducible scenario fingerprints.
+- **🤖 Evidence-Grounded AI Briefings:** Server-isolated **Mistral AI integration** generates executive summaries grounded exclusively in persisted verdict metadata, backed by an instant deterministic fallback engine.
+- **🛡️ Tamper-Evident Cryptographic Auditing:** Append-only audit log with serialized **SHA-256 hash chaining**, database transaction locking, **Merkle checkpoint proofs**, and exportable portable JSON proof bundles.
+- **🔄 Non-Mutating Remediation Simulation:** Forecasts organizational score improvements and blast radius before applying human-approved fixes to CRM contacts.
+- **🚨 Incident Command Cockpit:** Centralized incident tracker with statutory notification timers (72h CERT-In / 144h internal target), evidence logging, and CSV audit exports.
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer | Technologies & Tools |
+| Layer | Technologies |
 |---|---|
 | **Frontend** | **Next.js 15 (App Router)**, **React 19**, **TypeScript (Strict Mode)**, **Tailwind CSS v4**, **Recharts**, **Lucide Icons** |
-| **Backend / API** | **Next.js Server Actions & API Routes**, **Zod (Runtime Validation)**, **JOSE (JWT Tokens)**, **Bcrypt** |
+| **Backend / API** | **Next.js Server Actions & Route Handlers**, **Zod (Runtime Schema Validation)**, **JOSE (JWT Tokens)**, **Bcrypt** |
 | **Database & ORM** | **PostgreSQL**, **Prisma ORM (v6.19)**, Connection Pooling, Serialized Transactions |
 | **AI / LLM** | **Mistral AI API** (Server-Side Isolation, Zero Direct PII Transmission), Deterministic Fallback Engine |
 | **Security & Auth** | Signed HTTP-only Secure Cookies, Dual-Role Authorization (`Admin`, `DPO Reviewer`), Merkle Trees, SHA-256 Chaining |
-| **Testing & CI/CD** | **Vitest**, **Playwright Core** (End-to-End Browser Smoke Suite), **ESLint 9**, **Docker** |
+| **Testing & CI/CD** | **Vitest**, **Playwright Core** (Browser Smoke Suite), **ESLint 9**, **Docker** |
 
 ---
 
-## 🏗️ Architecture & Core Invariant
+## 🏗️ Architecture
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -77,18 +75,11 @@ The system features real-time risk scoring, an interactive **Rule Trace Studio**
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-> **Core System Invariant:** *AI cannot calculate scores, alter compliance states, mutate records, or execute remediation without explicit human-in-the-loop authorization.*
+> **Core System Invariant:** *The rule engine decides, AI explains, and humans approve. AI models have read-only access to persisted verdict metadata and cannot alter compliance scores, mutate records, or execute remediation without explicit human authorization.*
 
 ---
 
 ## 🚀 Installation & Setup
-
-### Prerequisites
-- **Node.js**: `v20.x` or higher
-- **PostgreSQL**: `v15+` (local or hosted like Supabase / Neon / Render)
-- **npm** or **pnpm**
-
-### Step-by-Step Instructions
 
 1. **Clone the Repository**
    ```bash
@@ -100,9 +91,9 @@ The system features real-time risk scoring, an interactive **Rule Trace Studio**
    ```bash
    cp .env.example .env.local
    ```
-   Configure the following in `.env.local`:
+   Provide the required variables in `.env.local`:
    ```env
-   DATABASE_URL="postgresql://user:password@localhost:5432/complylens?schema=public"
+   DATABASE_URL="postgresql://postgres:password@localhost:5432/complylens?schema=public"
    JWT_SECRET="your-secure-random-32-character-secret-key"
    MISTRAL_API_KEY="your-mistral-api-key"
    DEMO_ADMIN_PASSWORD="SecureAdminPassword123!"
@@ -120,11 +111,11 @@ The system features real-time risk scoring, an interactive **Rule Trace Studio**
    npm run db:seed
    ```
 
-5. **Run the Development Server**
+5. **Start Development Server**
    ```bash
    npm run dev
    ```
-   Open [http://localhost:3000](http://localhost:3000) in your browser.
+   Access the application at `http://localhost:3000`.
 
 ---
 
@@ -133,19 +124,21 @@ The system features real-time risk scoring, an interactive **Rule Trace Studio**
 ### Demo Credentials
 | Role | Email | Password |
 |---|---|---|
-| **System Administrator** | `admin@complylens.demo` | Set via `DEMO_ADMIN_PASSWORD` |
-| **DPO Reviewer** | `reviewer@complylens.demo` | Set via `DEMO_REVIEWER_PASSWORD` |
+| **System Administrator** | `admin@complylens.demo` | Configured via `DEMO_ADMIN_PASSWORD` |
+| **DPO Reviewer** | `reviewer@complylens.demo` | Configured via `DEMO_REVIEWER_PASSWORD` |
 
-### Running the Test Suite
+### Test & Quality Commands
 ```bash
 # Run unit & integration tests
 npm test
 
-# Run type checking & ESLint
-npm run typecheck
+# Run ESLint validation
 npm run lint
 
-# Run end-to-end browser smoke test
+# Run strict TypeScript type checking
+npm run typecheck
+
+# Run end-to-end browser smoke test suite
 npm run smoke:browser
 ```
 
@@ -153,18 +146,24 @@ npm run smoke:browser
 
 ## 📊 Results & Impact
 
-- **100% Deterministic Accuracy:** Replaced error-prone manual audits with automated, repeatable rule evaluations with zero scoring hallucination.
-- **Cryptographic Non-Repudiation:** Implemented full SHA-256 hash chaining and Merkle trees to ensure forensic auditability under regulatory scrutiny.
-- **Sub-10ms Rule Engine Latency:** High-throughput batch processing of contact portfolios using memory-efficient TypeScript evaluators.
-- **Enterprise-Ready Testing:** Backed by 6 comprehensive automated test suites covering cryptographic integrity, authentication, deterministic rules, simulation logic, and browser smoke flows.
+- **100% Deterministic Accuracy:** Eliminated subjective compliance interpretations by executing standardized, versioned mathematical rule logic with zero AI hallucination in scoring.
+- **Forensic Audit Integrity:** Built append-only SHA-256 hash chaining and Merkle trees to ensure tamper-evident logs verifiable by external regulatory bodies.
+- **High-Throughput Performance:** Sub-10ms evaluation latency per contact record using optimized in-memory evaluators and indexed relational storage.
+- **Comprehensive Quality Assurance:** Covered by 6 automated test suites encompassing authentication, cryptography, rule evaluation, fix simulation, and browser workflows.
+
+---
+
+## 👥 Contributors
+
+- **[Vedant Vishwanath Honnangi](https://github.com/VedantVH)** — Architecture, Full-Stack Engineering, Rule Engine & AI Orchestration
 
 ---
 
 ## 🤝 Contributing & License
 
-Contributions, issues, and feature requests are welcome. Feel free to check the [issues page](https://github.com/VedantVH/SalesForce/issues).
+Contributions, issues, and feature requests are welcome. Feel free to review open items on the [issues page](https://github.com/VedantVH/SalesForce/issues).
 
-Distributed under the **MIT License**. See `LICENSE` for more information.
+Distributed under the **MIT License**. See `LICENSE` for details.
 
 ---
 
@@ -172,4 +171,4 @@ Distributed under the **MIT License**. See `LICENSE` for more information.
 
 - **Author:** Vedant Vishwanath Honnangi
 - **GitHub:** [@VedantVH](https://github.com/VedantVH)
-- **Project Repository:** [VedantVH/SalesForce](https://github.com/VedantVH/SalesForce)
+- **Repository:** [https://github.com/VedantVH/SalesForce](https://github.com/VedantVH/SalesForce)
