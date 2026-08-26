@@ -46,20 +46,46 @@
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture & Project Flow
+
+### 1. System Flow Diagram
 
 ```mermaid
-flowchart LR
-    %% Black & White Minimalist Architecture
-    classDef dark fill:#000000,stroke:#000000,stroke-width:2px,color:#ffffff;
-    classDef light fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000;
-    classDef soft fill:#f4f4f5,stroke:#000000,stroke-width:1.5px,color:#000000;
+flowchart TD
+    UI[Web Dashboard UI<br>Next.js 15 / React 19] --> Controller[API Controllers & Server Actions<br>Zod Schema Validation]
+    AI[Mistral AI Explainer<br>Read-Only Verdict Briefings] --> Controller
 
-    User([👤 DPO / Analyst]):::dark --> Web[💻 Next.js 15 Portal<br>Dashboard & Trace Studio]:::light
-    Web --> Engine[⚙️ Deterministic Rule Engine<br>Evaluates 5 DPDP Controls]:::light
-    Engine --> DB[(🗄️ PostgreSQL + SHA-256<br>Audit Ledger & Verdicts)]:::soft
-    DB --> AI[🤖 Mistral AI Assistant<br>Read-Only Verdict Briefings]:::light
-    AI --> Approval([👮 Human Approval Gate<br>Remediation Sync to CRM]):::dark
+    Controller --> Service[Core Service Layer<br>Compliance & Simulation Services]
+
+    Service <-->|Final Score & Status| Engine[Deterministic Rule Engine<br>DPDP-001 to 005 Controls]
+    Service --> Audit[Audit Trail Logger<br>SHA-256 Hash Chaining]
+
+    Service -->|Persisted Records| DB[(Database<br>PostgreSQL / Prisma ORM)]
+    Audit --> DB
+```
+
+### 2. Assessment Sequence
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant UI as Web UI / DPO
+    participant Controller as API Controller
+    participant Service as Compliance Service
+    participant Engine as DPDP Rule Engine
+    participant DB as PostgreSQL DB
+
+    UI->>Controller: Initiate runAssessment(names)
+    Controller->>Service: runAssessment(assessmentName)
+    Service->>DB: Query Contacts & Active Rules
+    DB-->>Service: Return Contact Evidence Records
+    Service->>Engine: evaluate(rules, contacts)
+    Engine-->>Service: Return Rule Results, Scores & Fail Reasons
+    Service->>DB: Insert Compliance Assessment & Result Records
+    Service->>DB: Insert Compliance Recommendation Records
+    Service->>DB: Insert SHA-256 Chained Audit Log Entry
+    Service-->>Controller: Return Assessment ID & Summary
+    Controller-->>UI: Return Assessment Results & AI Briefing
 ```
 
 > **Core Invariant:**  
