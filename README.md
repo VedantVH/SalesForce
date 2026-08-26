@@ -3,13 +3,14 @@
 > **Enterprise DPDP Act (2023) Compliance Automation & Cryptographic Governance Engine**  
 > *Developed as part of the **Salesforce Compass Program***
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.5-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![Salesforce Compass](https://img.shields.io/badge/Salesforce-Compass%20Program-00A1E0?style=for-the-badge&logo=salesforce)](https://developer.salesforce.com/)
+[![Next.js](https://img.shields.io/badge/Next.js-15.5-black?style=for-the-badge&logo=nextdotjs)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.1-blue?style=for-the-badge&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
 [![Prisma](https://img.shields.io/badge/Prisma-6.19-2D3748?style=for-the-badge&logo=prisma)](https://www.prisma.io/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
-[![Mistral AI](https://img.shields.io/badge/Mistral_AI-Integrated-FF7000?style=for-the-badge&logo=ai)](https://mistral.ai/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-38B2AC?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
+[![Mistral AI](https://img.shields.io/badge/Mistral_AI-Integrated-FF7000?style=for-the-badge)](https://mistral.ai/)
 [![Vitest](https://img.shields.io/badge/Vitest-3.2-6E9F18?style=for-the-badge&logo=vitest)](https://vitest.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
@@ -26,7 +27,7 @@
 - **⚡ Deterministic Rule Engine:** Evaluates contact portfolios against 5 versioned DPDP controls (**Consent, Purpose, Retention, Notice, Minimization**) on a 100-point scale with zero AI hallucination risk in scoring.
 - **🔬 Interactive Rule Trace Studio:** Real-time, no-write sandbox enabling DPOs to toggle evidence parameters, inspect per-control trace matrices, and export reproducible scenario fingerprints.
 - **🤖 Evidence-Grounded AI Briefings:** Server-isolated **Mistral AI integration** generates structured executive summaries grounded exclusively in persisted verdict metadata, backed by an instant deterministic fallback engine.
-- **🛡️ Tamper-Evident Cryptographic Auditing:** Append-only audit trail with serialized **SHA-256 hash chaining**, database transaction locking, **Merkle checkpoint proofs**, and exportable portable JSON bundles.
+- **🛡️ Tamper-Evident Cryptographic Auditing:** Append-only audit trail with serialized **SHA-256 hash chaining**, database transaction locking, **Merkle checkpoint proofs**, and exportable portable JSON proof bundles.
 - **🔄 Non-Mutating Remediation Simulation:** Forecasts organizational score impact and blast radius before applying human-approved fixes to CRM contacts.
 - **🚨 Incident Command Cockpit:** Centralized incident tracker with statutory notification timers (72h CERT-In / 144h internal target), evidence logging, and CSV audit exports.
 
@@ -76,7 +77,7 @@
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-> **Core System Invariant:** *The rule engine decides, AI explains, and humans approve. Generative models operate with read-only access to persisted verdict metadata and cannot alter compliance scores, mutate records, or apply remediation without explicit human authorization.*
+> **Core Invariant:** *The rule engine decides, AI explains, and humans approve. Generative models operate with read-only access to persisted verdict metadata and cannot alter compliance scores, mutate records, or apply remediation without explicit human authorization.*
 
 ---
 
@@ -147,9 +148,10 @@ npm run smoke:browser
 
 ## 📊 Results & Impact
 
-- **100% Deterministic Verdict Integrity:** Completely eliminated subjective interpretation and LLM scoring hallucination by executing standardized mathematical deduction rules.
-- **Cryptographic Non-Repudiation:** Enforced SHA-256 hash chaining and Merkle checkpoint verification across all audit records for regulatory compliance.
-- **Robust Multi-Layer Testing:** Validated with automated test suites covering authentication, cryptography, rule evaluation, fix simulation, and browser workflows.
+- **Deterministic Verdict Integrity:** Enforces pure mathematical rule evaluations across all 5 DPDP controls with zero AI hallucination in scoring.
+- **Cryptographic Auditability:** Guarantees append-only tamper detection through serialized SHA-256 hash chaining and exportable Merkle inclusion proofs.
+- **Strict Separation of Concerns:** Architecturally isolates LLM reasoning from state mutation, ensuring all remediation actions require human-in-the-loop approval.
+- **Comprehensive Test Coverage:** Backed by 6 automated test suites covering authentication security, cryptographic hashing, rule engine boundaries, fix simulations, and browser workflows.
 
 ---
 
@@ -163,7 +165,7 @@ npm run smoke:browser
 
 Contributions, issues, and feature requests are welcome. Feel free to review open items on the [issues page](https://github.com/VedantVH/SalesForce/issues).
 
-Distributed under the **MIT License**. See `LICENSE` for details.
+Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for details.
 
 ---
 
