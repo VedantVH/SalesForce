@@ -1,8 +1,11 @@
+Here is the complete `README.md` code block in a single copyable box:
+
+```markdown
 # ComplyLens
 
 > **Enterprise DPDP Act (2023) Compliance Automation & Cryptographic Governance Engine**  
 > *Developed as part of the **Salesforce Compass Program***
-> 
+
 [![Next.js](https://img.shields.io/badge/Next.js-15.5-black?style=for-the-badge&logo=nextdotjs)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.1-blue?style=for-the-badge&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
@@ -17,37 +20,64 @@
 
 ## 📌 Overview
 
-**ComplyLens** is an enterprise data protection orchestration platform engineered to automate evaluations against India's **Digital Personal Data Protection (DPDP) Act, 2023**, developed as part of the **Salesforce Compass Program**. Built on a strict **zero-trust architecture**, the system decouples mathematical compliance evaluation from generative intelligence: **the deterministic engine decides, AI explains, and human operators approve**. The platform equips Data Protection Officers (DPOs), compliance teams, and privacy engineers with real-time risk scoring, reproducible rule traces, cryptographic audit integrity, and human-in-the-loop remediation.
+**ComplyLens** is an enterprise data protection compliance-operations platform engineered to automate evaluations against India's **Digital Personal Data Protection (DPDP) Act, 2023**, developed as part of the **Salesforce Compass Program**. Built on a strict **zero-trust architecture**, the platform decouples mathematical compliance evaluation from generative intelligence.
+
+### The Product Invariant
+🔒 **The Rule Engine Decides, AI Explains, and Humans Approve.**  
+*Mistral AI operates strictly on minimized, persisted verdict metadata in read-only mode. It cannot calculate a score, change a status, mutate a compliance result, or execute remediation actions.*
+
+ComplyLens functions as an evidence and decision governance layer above existing CRM, consent-management, security, and ticketing systems—acting as a control plane rather than a replacement system of record.
 
 ---
 
 ## ✨ Key Features
 
-- ** Deterministic Rule Engine:** Evaluates contact portfolios against 5 versioned DPDP controls (**Consent, Purpose, Retention, Notice, Minimization**) on a 100-point scale with zero AI hallucination risk in scoring.
-- ** Interactive Rule Trace Studio:** Real-time, no-write sandbox enabling DPOs to toggle evidence parameters, inspect per-control trace matrices, and export reproducible scenario fingerprints.
-- ** Evidence-Grounded AI Briefings:** Server-isolated **Mistral AI integration** generates structured executive summaries grounded exclusively in persisted verdict metadata, backed by an instant deterministic fallback engine.
-- ** Tamper-Evident Cryptographic Auditing:** Append-only audit trail with serialized **SHA-256 hash chaining**, database transaction locking, **Merkle checkpoint proofs**, and exportable portable JSON proof bundles.
-- ** Non-Mutating Remediation Simulation:** Forecasts organizational score impact and blast radius before applying human-approved fixes to CRM contacts.
-- ** Incident Command Cockpit:** Centralized incident tracker with statutory notification timers (72h CERT-In / 144h internal target), evidence logging, and CSV audit exports.
+- **Deterministic Rule Engine:** Evaluates contact records against 5 versioned DPDP controls on a 100-point rubric. Eliminates score hallucination risk using rule-based evaluation logic.
+- **Interactive Rule Trace Studio:** Provides a zero-side-effect sandbox for DPOs to test parameter adjustments in real time. Generates per-control trace matrices and exportable scenario fingerprints.
+- **Context-Isolated AI Briefings:** Uses a server-isolated Mistral LLM to generate summaries bound strictly to persisted verdict metadata. Includes an immediate deterministic fallback engine for high availability.
+- **Cryptographic Audit Log:** Secures event history using append-only SHA-256 hash chaining, transaction locks, and Merkle root verification. Generates portable, tamper-evident JSON proof bundles for compliance audits.
+- **Dry-Run Remediation Simulator:** Projects compliance score shifts and system blast radius before executing CRM database updates. Prevents unintended data mutation during contact remediation cycles.
+- **Incident Operations Center:** Tracks security events against statutory compliance timers, including 72-hour CERT-In and 144-hour internal SLAs. Centralizes evidence logging and generates structured CSV audit exports.
 
 ---
 
-## 🛠️ Tech Stack
+## 👥 Operating Model & Personas
 
-| Layer | Technologies |
+- **DPO / Privacy Operations Lead (Primary):** Reviews organization posture, independently approves remediation, monitors retention pressure, coordinates privacy-specific breach obligations, and exports audit evidence.
+- **CRM or Data Steward:** Investigates contact evidence and requests correction. *Cannot approve their own remediation or grant consent for a data principal.*
+- **Incident Response Lead:** Records breach scope and operational milestones while the DPO manages notification evidence.
+
+---
+
+## 🛠️ Tech Stack & Specifications
+
+| Layer | Technologies & Specifications |
 |---|---|
 | **Frontend** | **Next.js 15 (App Router, Turbopack)**, **React 19**, **TypeScript (Strict Mode)**, **Tailwind CSS v4**, **Recharts**, **Lucide Icons** |
 | **Backend / API** | **Next.js Server Actions & Route Handlers**, **Zod (Runtime Schema Validation)**, **JOSE (JWT Tokens)**, **Bcrypt** |
-| **Database & ORM** | **PostgreSQL**, **Prisma ORM (v6.19)**, Connection Pooling, Serialized Transaction Locks |
+| **Database & ORM** | **PostgreSQL (v16)**, **Prisma ORM (v6.19)**, Connection Pooling, Serialized Transaction Locks |
 | **AI / LLM** | **Mistral AI API** (Server-Side Isolation, Zero Direct PII Transmission), Deterministic Offline Fallback Engine |
 | **Security & Auth** | Signed HTTP-only Secure Cookies, Role-Based Access Control (`admin`, `dpo`, `reviewer`, `analyst`), Merkle Trees, SHA-256 Hash Chaining |
-| **Testing & CI/CD** | **Vitest** (Unit & Integration Suite), **Playwright Core** (Browser Smoke Suite), **ESLint 9**, **Docker** |
+| **Testing & CI/CD** | **Vitest 3.2** (Unit & Integration Suite), **Playwright Core** (Browser Smoke Suite), **ESLint 9**, **Docker** |
 
 ---
 
-## 🏗️ Architecture & Project Flow
+## 🔌 Rule-Engine Extension Model
 
-### 1. System Architecture Diagram
+Evidence is normalized into five typed inputs, evaluated by deterministic controls, scored from 100 using versioned deductions, checked by a severity gate, and appended to assessment history with the exact rule version and legal mapping. 
+
+To introduce a new policy:
+1. Map policy evidence into typed inputs.
+2. Implement a typed evaluator/remediation definition.
+3. Publish a database-backed rule version.
+4. Add boundary tests and activate the rule for future assessments.
+5. *Historical verdicts retain their original rule versions permanently.*
+
+---
+
+## 🏗️ Architecture & Workflows
+
+### System Architecture Diagram
 
 ```mermaid
 flowchart TD
@@ -68,9 +98,10 @@ flowchart TD
     AuditLog --> DB
     
     DB -.->|Read-Only Verdict Metadata| AI
+
 ```
 
-### 2. Assessment & Governance Sequence
+### Assessment & Governance Sequence
 
 ```mermaid
 sequenceDiagram
@@ -100,88 +131,145 @@ sequenceDiagram
         AI->>DB: Read Persisted Verdict (Zero PII)
         AI-->>DPO: Return Structured Briefing & Remediation Playbook
     end
+
 ```
 
-> **Core Invariant:**  
-> 🔒 **The Rule Engine Decides, AI Explains, and Humans Approve.**  
-> *AI models operate strictly on persisted metadata in read-only mode and are mathematically isolated from calculating scores, modifying compliance states, or triggering remediation actions.*
-
 ---
 
-## 🚀 Installation & Setup
+## 🚀 Local Setup & Development
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/VedantVH/SalesForce.git
-   cd SalesForce/salesforce
-   ```
+### 1. Prerequisites
 
-2. **Configure Environment Variables**
-   ```bash
-   cp .env.example .env.local
-   ```
-   Provide the required variables in `.env.local`:
-   ```env
-   DATABASE_URL="postgresql://USER:PASSWORD@HOST/DB?sslmode=require"
-   JWT_SECRET="replace-with-at-least-32-random-characters"
-   MISTRAL_API_KEY="replace-with-your-mistral-key"
-   DEMO_ADMIN_PASSWORD="replace-with-a-strong-unique-password"
-   DEMO_REVIEWER_PASSWORD="replace-with-a-different-strong-password"
-   ```
+Ensure you have Node.js 18+ and a running PostgreSQL instance (or Docker) available.
+For workstation setup, an isolated PostgreSQL container can be bound to `127.0.0.1:55432`:
 
-3. **Install Dependencies**
-   ```bash
-   npm install
-   ```
-
-4. **Initialize Database & Seed Data**
-   ```bash
-   npm run db:migrate -- --name init
-   npm run db:seed
-   ```
-
-5. **Start Development Server**
-   ```bash
-   npm run dev
-   ```
-   Access the application at `http://localhost:3000`.
-
----
-
-## 💻 Usage & Verification
-
-### Demo Credentials
-| Role | Email | Password |
-|---|---|---|
-| **System Administrator** | `admin@complylens.demo` | Configured via `DEMO_ADMIN_PASSWORD` |
-| **DPO Reviewer** | `reviewer@complylens.demo` | Configured via `DEMO_REVIEWER_PASSWORD` |
-
-### Test & Quality Commands
 ```bash
-# Run unit & integration test suites
+docker run --name complylens-dev-db -e POSTGRES_PASSWORD=postgres -p 55432:5432 -d postgres:16
+
+```
+
+### 2. Installation Steps
+
+```bash
+# Clone repository
+git clone [https://github.com/VedantVH/SalesForce.git](https://github.com/VedantVH/SalesForce.git)
+cd SalesForce/salesforce
+
+# Copy environment template
+cp .env.example .env.local
+
+# Install dependencies
+npm install
+
+# Run migrations & seed demo dataset
+npm run db:migrate -- --name init
+npm run db:seed
+
+# Start development server
+npm run dev
+
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 🔑 Environment Variables & Demo Access
+
+### Environment Configuration (`.env.local`)
+
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@127.0.0.1:55432/complylens?sslmode=disable"
+JWT_SECRET="replace-with-at-least-32-random-characters"
+MISTRAL_API_KEY="replace-with-your-mistral-api-key"
+DEMO_ADMIN_PASSWORD="replace-with-a-strong-admin-password"
+DEMO_REVIEWER_PASSWORD="replace-with-a-strong-reviewer-password"
+
+```
+
+### Managed Accounts
+
+| Role | Email | Password |
+| --- | --- | --- |
+| **Administrator** | `admin@complylens.demo` | Value of `DEMO_ADMIN_PASSWORD` |
+| **DPO Reviewer** | `reviewer@complylens.demo` | Value of `DEMO_REVIEWER_PASSWORD` |
+
+*Note: Running `npm run db:seed` refreshes password hashes based on these variables without overwriting operational records.*
+
+---
+
+## 🧪 Testing & Verification Suite
+
+Execute the full suite of automated checks before committing code:
+
+```bash
+# Unit and integration tests
 npm test
 
-# Run ESLint validation
+# Linter validation
 npm run lint
 
-# Run strict TypeScript type checking
+# Strict TypeScript typechecking
 npm run typecheck
 
-# Run end-to-end browser smoke test suite
+# Production build test
+npm run build
+
+# End-to-End Headless Browser Smoke Test
 npm run smoke:browser
+
 ```
+
+> **Smoke Test Scope:** Runs Playwright/Chrome against a production build (`npm start`) verifying auth, bulk assessments, contact investigation, simulation, remediation lifecycle, incident logging, AI fallback, audit proof export, CSV downloads, and layout stability.
 
 ---
 
-## 📊 Results & Impact
+## ☁️ Deployment Instructions
 
-- **Deterministic Verdict Integrity:** Enforces pure mathematical rule evaluations across all 5 DPDP controls with zero AI hallucination in scoring.
-- **Cryptographic Auditability:** Guarantees append-only tamper detection through serialized SHA-256 hash chaining and exportable Merkle inclusion proofs.
-- **Strict Separation of Concerns:** Architecturally isolates LLM reasoning from state mutation, ensuring all remediation actions require human-in-the-loop approval.
-- **Comprehensive Test Coverage:** Backed by 6 automated test suites covering authentication security, cryptographic hashing, rule engine boundaries, fix simulations, and browser workflows.
+### Render Deployment (Blueprint)
+
+1. Select **New → Blueprint** in Render and connect this repository.
+2. Render will auto-detect `render.yaml`.
+3. Provide `MISTRAL_API_KEY`, `DEMO_ADMIN_PASSWORD`, and `DEMO_REVIEWER_PASSWORD` when prompted (*Never use `NEXT_PUBLIC_` prefixes*).
+4. Render handles database creation, migrations, seed bootstrapping, and building automatically.
+5. Verification URL: `https://complylens.onrender.com/login`
+
+*Manual Build/Start Override for Render Free Tier:*
+
+* **Build Command:** `npm ci && npm run db:deploy && npm run db:seed && npm run build`
+* **Start Command:** `npm start`
+
+### Vercel Deployment
+
+1. Provision a managed PostgreSQL database (e.g., Neon, Supabase) and obtain the pooled connection string.
+2. Import the GitHub repository into Vercel.
+3. Set environment variables: `DATABASE_URL`, `JWT_SECRET`, `MISTRAL_API_KEY`, `DEMO_ADMIN_PASSWORD`, `DEMO_REVIEWER_PASSWORD`.
+4. Deploy the application, then execute one-time database setup from your CLI:
+```bash
+npm run db:deploy
+npm run db:seed
+
+```
+
+
+
+---
+
+## 🛡️ Security, Compliance Boundaries & Disclaimers
+
+* **Audit Chain Bounds:** `ComplianceAssessment`, `ComplianceResult`, and `AuditLog` records are append-only. Cryptographic hash chains ensure tamper detection against application users, but external root anchoring (Phase 2) is required to restrict direct database administrator overwrites.
+* **Session Security:** Session cookies use JOSE-signed tokens, HTTP-only flags, `SameSite=Lax`, 8-hour expiration windows, and strict `Secure` transport in production environments.
+* **Zero-PII AI Boundary:** Mistral receives zero direct PII field data. Data residency and cross-border processing review for external LLM calls must be conducted prior to handling production personal data.
+* **Regulatory Disclaimer:** Penalty calculations and SLAs (144-hour internal escalation targets) provided in the UI serve as operational aids and illustrative metrics. They do not constitute legal certification or liability predictions.
 
 ---
 
 ## 🤝 Contributing & License
 
-Contributions, issues, and feature requests are welcome. Feel free to review open items on the [issues page](https://github.com/VedantVH/SalesForce/issues).
+Contributions and issue tracking are managed through the primary repository.
+
+Distributed under the **MIT License**. See `LICENSE` for details.
+
+```
+
+```
