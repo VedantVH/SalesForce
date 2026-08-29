@@ -63,62 +63,9 @@ This is an architectural boundary. AI cannot calculate a score, change a status,
 ## 🏗 Architecture
 
 ```
-┌─────────────────────────────────────────────┐
-│              Browser / Client               │
-│     Next.js 15 App Router · React 19        │
-│              Recharts · TypeScript          │
-└──────────────────────┬──────────────────────┘
-                       │  HTTPS · HTTP-only signed session cookie
-┌──────────────────────▼──────────────────────┐
-│             Next.js API Routes              │
-│   Auth Middleware · requireSession()        │
-│            Zod body + query validation      │
-└──────────────────────┬──────────────────────┘
-                       │
-          ┌────────────▼────────────┐
-          │   Comparison available? │  ◀── decision gate
-          └──────┬──────────────────┘
-                 │                  │
-               Yes               No / invalid output
-                 │                  │
-    ┌────────────▼──────┐  ┌────────▼──────────────┐
-    │ Structured        │  │ Deterministic local    │
-    │ classifier        │  │ classifier             │
-    └────────────┬──────┘  └────────┬───────────────┘
-                 └────────┬─────────┘
-                          │
-┌─────────────────────────▼───────────────────┐
-│       Schema validation + normalisation     │
-└─────────────────────────┬───────────────────┘
-                          │
-┌─────────────────────────▼───────────────────┐
-│         Deterministic Rule Engine           │
-│  Evidence → Controls → Score → Severity     │
-│  gate → Persist verdict + legal mapping     │
-│                                             │
-│  ⚠  AI does not participate in this stage  │
-└──────────┬───────────────────┬──────────────┘
-           │                   │
-┌──────────▼──────────┐  ┌─────▼────────────────┐
-│   AI Briefing       │  │   Audit Chain         │
-│   Mistral · server  │  │   SHA-256 chained     │
-│   read-only         │  │   Merkle proofs       │
-│   no PII in context │  │   JSON export         │
-└──────────┬──────────┘  └─────┬────────────────┘
-           └────────┬──────────┘
-                    │  Prisma ORM
-┌───────────────────▼─────────────────────────┐
-│                PostgreSQL                   │
-│  ComplianceAssessment · ComplianceResult    │
-│  AuditLog (append-only) · RuleVersion       │
-│  Contact · Incident · MerkleCheckpoint      │
-└───────────────────┬─────────────────────────┘
-                    │  production adapters only
-┌───────────────────▼─────────────────────────┐
-│           External Connectors               │
-│   CRM · Consent Channel · SIEM · Ticketing  │
-│   (source systems remain system of record)  │
-└─────────────────────────────────────────────┘
+<img width="1164" height="1878" alt="image" src="https://github.com/user-attachments/assets/c8a868a1-f8a4-4120-9440-210d1575035d" />
+
+
 ```
 
 <details>
