@@ -63,7 +63,8 @@ This is an architectural boundary. AI cannot calculate a score, change a status,
 ## 🏗 Architecture
 
 ```
-<div align="center">
+<p align="center">
+<pre>
 
 ┌─────────────────────────────────────────────┐
 │              Browser / Client               │
@@ -122,7 +123,8 @@ This is an architectural boundary. AI cannot calculate a score, change a status,
 │   (source systems remain system of record)  │
 └─────────────────────────────────────────────┘
 
-
+</pre>
+</p>
 ```
 
 <details>
