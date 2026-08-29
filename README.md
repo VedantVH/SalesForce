@@ -4,11 +4,15 @@
 
 <img src="https://img.shields.io/badge/ComplyLens-DPDP%20Compliance%20Platform-6366f1?style=for-the-badge&logoColor=white" alt="ComplyLens" />
 
-<br />
-<br />
+<br /><br />
 
-<p><strong>India's Digital Personal Data Protection (DPDP) Act — Compliance Operations Platform</strong></p>
-<p>Deterministic rule engine · Evidence-grounded AI briefings · Tamper-evident SHA-256 audit chain</p>
+# ComplyLens
+
+### A Full-Stack Compliance Operations Platform for India's Digital Personal Data Protection (DPDP) Act
+
+**Deterministic rule engine · AI-assisted evidence briefings · Tamper-evident audit chain**
+
+*Designed and built independently, end to end.*
 
 <br />
 
@@ -23,40 +27,49 @@
 
 <br />
 
-[Quick Start](#-quick-start) · [Architecture](#-architecture) · [Features](#-features) · [Personas](#-user-personas) · [Deploy](#-deployment) · [Security](#-security)
-
-<br />
+**[Quick Start](#-quick-start) · [Architecture](#-architecture) · [Features](#-features) · [Tech Stack](#-tech-stack) · [Security](#-security) · [Deployment](#-deployment)**
 
 </div>
 
 ---
 
-## What is ComplyLens?
+## 🎯 Why This Project Exists
 
-ComplyLens is an **evidence and decision layer** built for India's DPDP Act. It connects above your existing CRM, consent management, SIEM, and ticketing systems — via production adapters — without replacing them.
+India's DPDP Act imposes real regulatory obligations on any organisation handling personal data — consent tracking, breach notification timelines, retention limits, and audit-ready evidence. Most companies handle this with spreadsheets and manual reviews, which don't scale and don't hold up under audit.
 
-The architecture enforces one invariant:
+**ComplyLens is a decision-support layer** that sits on top of existing systems (CRM, consent platforms, SIEM, ticketing) and turns raw evidence into rule-based compliance verdicts — with every score reproducible, every action logged, and every AI-generated explanation traceable back to the exact rule that produced it.
 
-```
-Rule engine  ──▶  decides every verdict       deterministic · versioned · no exceptions
-Mistral AI   ──▶  explains it afterward       read-only · post-pipeline · no mutations
-Human DPO    ──▶  approves all remediation    nothing changes without explicit sign-off
-```
+> 💡 **The core engineering problem this solves:** how do you let an LLM *explain* a compliance decision to a human without ever letting it *make* that decision? This repo is a working answer to that question.
 
-This is an architectural boundary. AI cannot calculate a score, change a status, mutate a result, or trigger remediation. Ever.
+I designed and built this project myself — from the architecture and deterministic rule engine, to the AI integration boundary, database schema, audit-chain implementation, and test suite.
 
 ---
 
-## 📸 Screenshots
+## 🧠 At a Glance — For Recruiters & Reviewers
 
-> Add screenshots here once the UI is running.  
-> Place images in `/docs/screenshots/` and link them:
->
-> ```md
-> ![Dashboard](docs/screenshots/dashboard.png)
-> ![Rule Trace Studio](docs/screenshots/rule-trace.png)
-> ![Incident Command](docs/screenshots/incident.png)
-> ```
+| | |
+|---|---|
+| 🏗️ **Type** | Full-stack SaaS platform (frontend, backend, database, AI integration) |
+| 🎯 **Domain** | RegTech / Data Privacy Compliance (India's DPDP Act, 2023) |
+| 🔐 **Core Challenge Solved** | Strict separation between deterministic decision logic and generative AI explanation |
+| 🧩 **Engineering Highlights** | Versioned rule engine · SHA-256 hash-chained audit log with Merkle proofs · Role-based access control · Non-mutating simulation sandbox |
+| 🧪 **Quality Bar** | Automated unit/integration tests, full browser smoke suite, strict TypeScript, CI-ready build pipeline |
+| ⚙️ **AI Usage Pattern** | Read-only, post-decision, PII-stripped context with deterministic fallback if the AI provider is unavailable |
+| 📦 **Deployability** | One-click Render Blueprint deploy + documented Vercel/managed-Postgres path |
+
+This project demonstrates end-to-end product thinking — not just "add an LLM to an app," but designing the *guardrails* around it so the system stays legally defensible, auditable, and trustworthy even when AI is involved.
+
+---
+
+## 🏛 The One Rule This System Never Breaks
+
+```
+Rule Engine   ──▶  decides every verdict        deterministic · versioned · no exceptions
+Mistral AI    ──▶  explains it afterward         read-only · post-pipeline · no mutations
+Human DPO     ──▶  approves all remediation      nothing changes without explicit sign-off
+```
+
+This is enforced architecturally, not just by convention — the AI layer has no write path into the scoring pipeline. It can only read a verdict that has already been persisted and generate a plain-language explanation of it.
 
 ---
 
@@ -65,67 +78,65 @@ This is an architectural boundary. AI cannot calculate a score, change a status,
 <p align="center">
 <pre>
 ┌─────────────────────────────────────────────┐
-│              Browser / Client               │
-│     Next.js 15 App Router · React 19        │
-│              Recharts · TypeScript          │
-└──────────────────────┬──────────────────────┘
-                       │  HTTPS · HTTP-only signed session cookie
-┌──────────────────────▼──────────────────────┐
-│             Next.js API Routes              │
-│   Auth Middleware · requireSession()        │
-│            Zod body + query validation      │
-└──────────────────────┬──────────────────────┘
-                       │
-          ┌────────────▼────────────┐
-          │   Comparison available? │  ◀── decision gate
-          └──────┬──────────────────┘
-                 │                  │
-               Yes               No / invalid output
-                 │                  │
-    ┌────────────▼──────┐  ┌────────▼──────────────┐
-    │ Structured        │  │ Deterministic local    │
-    │ classifier        │  │ classifier             │
-    └────────────┬──────┘  └────────┬───────────────┘
-                 └────────┬─────────┘
-                          │
-┌─────────────────────────▼───────────────────┐
-│       Schema validation + normalisation     │
-└─────────────────────────┬───────────────────┘
-                          │
-┌─────────────────────────▼───────────────────┐
-│         Deterministic Rule Engine           │
-│  Evidence → Controls → Score → Severity     │
-│  gate → Persist verdict + legal mapping     │
-│                                             │
-│  ⚠  AI does not participate in this stage  │
-└──────────┬───────────────────┬──────────────┘
-           │                   │
-┌──────────▼──────────┐  ┌─────▼────────────────┐
-│   AI Briefing       │  │   Audit Chain         │
-│   Mistral · server  │  │   SHA-256 chained     │
-│   read-only         │  │   Merkle proofs       │
-│   no PII in context │  │   JSON export         │
-└──────────┬──────────┘  └─────┬────────────────┘
-           └────────┬──────────┘
-                    │  Prisma ORM
-┌───────────────────▼─────────────────────────┐
-│                PostgreSQL                   │
-│  ComplianceAssessment · ComplianceResult    │
-│  AuditLog (append-only) · RuleVersion       │
-│  Contact · Incident · MerkleCheckpoint      │
-└───────────────────┬─────────────────────────┘
-                    │  production adapters only
-┌───────────────────▼─────────────────────────┐
-│           External Connectors               │
-│   CRM · Consent Channel · SIEM · Ticketing  │
-│   (source systems remain system of record)  │
-└─────────────────────────────────────────────┘
+│              Browser / Client                │
+│      Next.js 15 App Router · React 19        │
+│           Recharts · TypeScript              │
+└──────────────────────┬───────────────────────┘
+                        │  HTTPS · HTTP-only signed session cookie
+┌───────────────────────▼───────────────────────┐
+│              Next.js API Routes                │
+│    Auth Middleware · requireSession()          │
+│         Zod body + query validation            │
+└───────────────────────┬───────────────────────┘
+                         │
+            ┌────────────▼────────────┐
+            │   Comparison available?  │  ◀── decision gate
+            └──────┬────────────────┬──┘
+                 Yes                No / invalid output
+                   │                  │
+      ┌────────────▼──────┐  ┌────────▼──────────────┐
+      │ Structured        │  │ Deterministic local    │
+      │ classifier        │  │ classifier             │
+      └────────────┬──────┘  └────────┬───────────────┘
+                    └────────┬─────────┘
+                             │
+   ┌─────────────────────────▼───────────────────┐
+   │        Schema validation + normalisation     │
+   └─────────────────────────┬───────────────────┘
+                             │
+   ┌─────────────────────────▼───────────────────┐
+   │          Deterministic Rule Engine           │
+   │   Evidence → Controls → Score → Severity     │
+   │   gate → Persist verdict + legal mapping     │
+   │                                               │
+   │   ⚠  AI does not participate in this stage   │
+   └──────────┬───────────────────┬───────────────┘
+              │                   │
+   ┌──────────▼──────────┐  ┌─────▼────────────────┐
+   │    AI Briefing       │  │    Audit Chain        │
+   │    Mistral · server   │  │    SHA-256 chained    │
+   │    read-only          │  │    Merkle proofs      │
+   │    no PII in context  │  │    JSON export        │
+   └──────────┬────────────┘  └─────┬─────────────────┘
+              └────────┬──────────────┘
+                        │  Prisma ORM
+   ┌────────────────────▼─────────────────────────┐
+   │                 PostgreSQL                    │
+   │   ComplianceAssessment · ComplianceResult      │
+   │   AuditLog (append-only) · RuleVersion         │
+   │   Contact · Incident · MerkleCheckpoint        │
+   └────────────────────┬─────────────────────────┘
+                         │  production adapters only
+   ┌────────────────────▼─────────────────────────┐
+   │            External Connectors                │
+   │    CRM · Consent Channel · SIEM · Ticketing    │
+   │     (source systems remain system of record)   │
+   └─────────────────────────────────────────────┘
 </pre>
 </p>
 
-
 <details>
-<summary><b>Key architectural decisions</b></summary>
+<summary><b>📐 Key architectural decisions (click to expand)</b></summary>
 <br />
 
 | Concern | Decision | Why |
@@ -143,11 +154,11 @@ This is an architectural boundary. AI cannot calculate a score, change a status,
 
 ## ✨ Features
 
-<details>
+<details open>
 <summary><b>🔢 Deterministic DPDP Assessment Engine</b></summary>
 <br />
 
-Five-stage pipeline — Mistral is involved in zero of these stages:
+A five-stage pipeline where Mistral is involved in **zero** of the stages:
 
 ```
 Raw evidence  (CRM · Consent System · SIEM)
@@ -169,10 +180,10 @@ Historical verdicts are pinned to their original rule version. Retroactive re-sc
 <summary><b>🔬 Rule Trace Studio</b></summary>
 <br />
 
-Non-mutating simulation environment — safe to run against production data.
+A non-mutating simulation environment — safe to run against production data.
 
 - Live evidence toggles with per-control execution traces
-- Reproducible scenario fingerprint — share exact simulation state
+- Reproducible scenario fingerprint — share exact simulation state with a teammate
 - Inactive extension preview — test new rules before activation
 
 </details>
@@ -203,7 +214,7 @@ Non-mutating simulation environment — safe to run against production data.
 <summary><b>🚨 Incident Command Cockpit</b></summary>
 <br />
 
-- 144-hour internal escalation target visibility *(not a statutory deadline — see [legal](#%EF%B8%8F-legal))*
+- 144-hour internal escalation target visibility *(not a statutory deadline — see [Legal](#%EF%B8%8F-legal))*
 - Notification evidence tracking
 - Guarded containment and closure — prevents premature status changes
 - CSV reporting · SDF operational review · tamper-evident audit verification
@@ -254,11 +265,11 @@ cp .env.example .env.local
 Open `.env.local` and fill in all five values:
 
 ```env
-DATABASE_URL          = postgresql://user:pass@localhost:55432/complylens
-JWT_SECRET            = <random-string-minimum-32-characters>
-MISTRAL_API_KEY       = <your-key>
-DEMO_ADMIN_PASSWORD   = <strong-password>
-DEMO_REVIEWER_PASSWORD= <strong-password>
+DATABASE_URL           = postgresql://user:pass@localhost:55432/complylens
+JWT_SECRET              = <random-string-minimum-32-characters>
+MISTRAL_API_KEY         = <your-key>
+DEMO_ADMIN_PASSWORD     = <strong-password>
+DEMO_REVIEWER_PASSWORD  = <strong-password>
 ```
 
 > ⚠️ Never prefix any of these with `NEXT_PUBLIC_`. Never commit `.env.local`.
@@ -287,14 +298,14 @@ Open **[http://localhost:3000](http://localhost:3000)** and sign in with the [de
 
 ```bash
 npm test               # Vitest — unit + integration
-npm run lint           # ESLint
-npm run typecheck      # Strict TypeScript check
-npm run build          # Production build verification
-npm run smoke:browser  # Full browser smoke test (Chrome + running server)
+npm run lint            # ESLint
+npm run typecheck       # Strict TypeScript check
+npm run build           # Production build verification
+npm run smoke:browser   # Full browser smoke test (Chrome + running server)
 ```
 
 <details>
-<summary><b>Full smoke test coverage</b></summary>
+<summary><b>✅ Full smoke test coverage (click to expand)</b></summary>
 <br />
 
 | Area | Status |
@@ -328,10 +339,8 @@ npm run smoke:browser  # Full browser smoke test (Chrome + running server)
 | `DEMO_ADMIN_PASSWORD` | ✅ | Rotate before handling real personal data |
 | `DEMO_REVIEWER_PASSWORD` | ✅ | Rotate before handling real personal data |
 
----
-
 <details>
-<summary><b>☁️ Render — Free Tier</b></summary>
+<summary><b>☁️ Deploy to Render — Free Tier (click to expand)</b></summary>
 <br />
 
 `render.yaml` is included and auto-generates `JWT_SECRET`. Render's free tier does not support pre-deploy commands, so migrations run as part of the build.
@@ -359,7 +368,7 @@ npm start
 </details>
 
 <details>
-<summary><b>▲ Vercel + Managed Postgres</b></summary>
+<summary><b>▲ Deploy to Vercel + Managed Postgres (click to expand)</b></summary>
 <br />
 
 ```bash
@@ -384,7 +393,7 @@ Vercel redeploys automatically on every push to `main`. Always run production mi
 ## 🔐 Security
 
 <details>
-<summary><b>Security controls</b></summary>
+<summary><b>Security controls (click to expand)</b></summary>
 <br />
 
 | Control | Status |
@@ -464,5 +473,7 @@ Proprietary — all rights reserved.
 ---
 
 <div align="center">
-<sub>Built with Next.js 15 · React 19 · TypeScript · Prisma · PostgreSQL · Mistral AI · Vitest</sub>
+<sub>Built solo with Next.js 15 · React 19 · TypeScript · Prisma · PostgreSQL · Mistral AI · Vitest</sub>
+<br />
+<sub>⭐ If this project is useful or interesting, consider starring the repo!</sub>
 </div>
