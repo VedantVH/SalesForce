@@ -23,12 +23,12 @@
 
 ## ✨ Key Features
 
-- **⚡ Deterministic Rule Engine:** Evaluates contact portfolios against 5 versioned DPDP controls (**Consent, Purpose, Retention, Notice, Minimization**) on a 100-point scale with zero AI hallucination risk in scoring.
-- **🔬 Interactive Rule Trace Studio:** Real-time, no-write sandbox enabling DPOs to toggle evidence parameters, inspect per-control trace matrices, and export reproducible scenario fingerprints.
-- **🤖 Evidence-Grounded AI Briefings:** Server-isolated **Mistral AI integration** generates structured executive summaries grounded exclusively in persisted verdict metadata, backed by an instant deterministic fallback engine.
-- **🛡️ Tamper-Evident Cryptographic Auditing:** Append-only audit trail with serialized **SHA-256 hash chaining**, database transaction locking, **Merkle checkpoint proofs**, and exportable portable JSON proof bundles.
-- **🔄 Non-Mutating Remediation Simulation:** Forecasts organizational score impact and blast radius before applying human-approved fixes to CRM contacts.
-- **🚨 Incident Command Cockpit:** Centralized incident tracker with statutory notification timers (72h CERT-In / 144h internal target), evidence logging, and CSV audit exports.
+- ** Deterministic Rule Engine:** Evaluates contact portfolios against 5 versioned DPDP controls (**Consent, Purpose, Retention, Notice, Minimization**) on a 100-point scale with zero AI hallucination risk in scoring.
+- ** Interactive Rule Trace Studio:** Real-time, no-write sandbox enabling DPOs to toggle evidence parameters, inspect per-control trace matrices, and export reproducible scenario fingerprints.
+- ** Evidence-Grounded AI Briefings:** Server-isolated **Mistral AI integration** generates structured executive summaries grounded exclusively in persisted verdict metadata, backed by an instant deterministic fallback engine.
+- ** Tamper-Evident Cryptographic Auditing:** Append-only audit trail with serialized **SHA-256 hash chaining**, database transaction locking, **Merkle checkpoint proofs**, and exportable portable JSON proof bundles.
+- ** Non-Mutating Remediation Simulation:** Forecasts organizational score impact and blast radius before applying human-approved fixes to CRM contacts.
+- ** Incident Command Cockpit:** Centralized incident tracker with statutory notification timers (72h CERT-In / 144h internal target), evidence logging, and CSV audit exports.
 
 ---
 
