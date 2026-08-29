@@ -12,8 +12,6 @@
 
 **Deterministic rule engine · AI-assisted evidence briefings · Tamper-evident audit chain**
 
-*Designed and built independently, end to end.*
-
 <br />
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=flat-square&logo=nextdotjs&logoColor=white)](https://nextjs.org)
@@ -33,19 +31,25 @@
 
 ---
 
+## 📌 Project Context
+
+This repository was built as part of the **Salesforce Compass 2.0 Cohort Project**, under the title **ComplyLens**.
+
+The brief: design a working compliance operations platform for a real-world regulatory framework — India's DPDP Act — that goes beyond a checklist UI and demonstrates production-grade engineering judgment: deterministic decision-making, safe AI integration, and auditability.
+
+---
+
 ## 🎯 Why This Project Exists
 
-India's DPDP Act imposes real regulatory obligations on any organisation handling personal data — consent tracking, breach notification timelines, retention limits, and audit-ready evidence. Most companies handle this with spreadsheets and manual reviews, which don't scale and don't hold up under audit.
+India's DPDP Act imposes real regulatory obligations on any organisation handling personal data — consent tracking, breach notification timelines, retention limits, and audit-ready evidence. Most organisations handle this with spreadsheets and manual reviews, which don't scale and don't hold up under audit.
 
 **ComplyLens is a decision-support layer** that sits on top of existing systems (CRM, consent platforms, SIEM, ticketing) and turns raw evidence into rule-based compliance verdicts — with every score reproducible, every action logged, and every AI-generated explanation traceable back to the exact rule that produced it.
 
 > 💡 **The core engineering problem this solves:** how do you let an LLM *explain* a compliance decision to a human without ever letting it *make* that decision? This repo is a working answer to that question.
 
-I designed and built this project myself — from the architecture and deterministic rule engine, to the AI integration boundary, database schema, audit-chain implementation, and test suite.
-
 ---
 
-## 🧠 At a Glance — For Recruiters & Reviewers
+## 🧠 At a Glance
 
 | | |
 |---|---|
@@ -257,8 +261,8 @@ A non-mutating simulation environment — safe to run against production data.
 ### 1 — Clone and configure
 
 ```bash
-git clone https://github.com/nischala755/salesforce.git
-cd salesforce
+git clone <this-repository-url>
+cd complylens
 cp .env.example .env.local
 ```
 
@@ -351,7 +355,7 @@ npm run smoke:browser   # Full browser smoke test (Chrome + running server)
 2. Confirm Render detects `render.yaml`
 3. Enter `MISTRAL_API_KEY`, `DEMO_ADMIN_PASSWORD`, `DEMO_REVIEWER_PASSWORD` when prompted
 4. Create Blueprint — wait for: migration → bootstrap → build → health check
-5. Open `https://complylens.onrender.com/login`
+5. Open the deployed `/login` URL
 
 **Manual build command:**
 ```bash
@@ -473,7 +477,7 @@ Proprietary — all rights reserved.
 ---
 
 <div align="center">
-<sub>Built solo with Next.js 15 · React 19 · TypeScript · Prisma · PostgreSQL · Mistral AI · Vitest</sub>
+<sub>Built with Next.js 15 · React 19 · TypeScript · Prisma · PostgreSQL · Mistral AI · Vitest</sub>
 <br />
-<sub>⭐ If this project is useful or interesting, consider starring the repo!</sub>
+<sub>Salesforce Compass 2.0 Cohort Project — ComplyLens</sub>
 </div>
