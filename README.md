@@ -62,10 +62,8 @@ This is an architectural boundary. AI cannot calculate a score, change a status,
 
 ## 🏗 Architecture
 
-```
 <p align="center">
 <pre>
-
 ┌─────────────────────────────────────────────┐
 │              Browser / Client               │
 │     Next.js 15 App Router · React 19        │
@@ -122,10 +120,9 @@ This is an architectural boundary. AI cannot calculate a score, change a status,
 │   CRM · Consent Channel · SIEM · Ticketing  │
 │   (source systems remain system of record)  │
 └─────────────────────────────────────────────┘
-
 </pre>
 </p>
-```
+
 
 <details>
 <summary><b>Key architectural decisions</b></summary>
