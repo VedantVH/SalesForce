@@ -1,275 +1,465 @@
-Here is the complete `README.md` code block in a single copyable box:
+<div align="center">
 
-```markdown
-# ComplyLens
+<br />
 
-> **Enterprise DPDP Act (2023) Compliance Automation & Cryptographic Governance Engine**  
-> *Developed as part of the **Salesforce Compass Program***
+<img src="https://img.shields.io/badge/ComplyLens-DPDP%20Compliance%20Platform-6366f1?style=for-the-badge&logoColor=white" alt="ComplyLens" />
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.5-black?style=for-the-badge&logo=nextdotjs)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.1-blue?style=for-the-badge&logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
-[![Prisma](https://img.shields.io/badge/Prisma-6.19-2D3748?style=for-the-badge&logo=prisma)](https://www.prisma.io/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-38B2AC?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
-[![Mistral AI](https://img.shields.io/badge/Mistral_AI-Integrated-FF7000?style=for-the-badge)](https://mistral.ai/)
-[![Vitest](https://img.shields.io/badge/Vitest-3.2-6E9F18?style=for-the-badge&logo=vitest)](https://vitest.dev/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+<br />
+<br />
 
----
+<p><strong>India's Digital Personal Data Protection (DPDP) Act — Compliance Operations Platform</strong></p>
+<p>Deterministic rule engine · Evidence-grounded AI briefings · Tamper-evident SHA-256 audit chain</p>
 
-## 📌 Overview
+<br />
 
-**ComplyLens** is an enterprise data protection compliance-operations platform engineered to automate evaluations against India's **Digital Personal Data Protection (DPDP) Act, 2023**, developed as part of the **Salesforce Compass Program**. Built on a strict **zero-trust architecture**, the platform decouples mathematical compliance evaluation from generative intelligence.
+[![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=flat-square&logo=nextdotjs&logoColor=white)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev)
+[![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=flat-square&logo=prisma&logoColor=white)](https://prisma.io)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://postgresql.org)
+[![Mistral AI](https://img.shields.io/badge/Mistral-AI%20Engine-FF7000?style=flat-square)](https://mistral.ai)
+[![Vitest](https://img.shields.io/badge/Vitest-Testing-6E9F18?style=flat-square&logo=vitest&logoColor=white)](https://vitest.dev)
+[![License](https://img.shields.io/badge/License-Proprietary-dc2626?style=flat-square)](#-license)
 
-### The Product Invariant
-🔒 **The Rule Engine Decides, AI Explains, and Humans Approve.**  
-*Mistral AI operates strictly on minimized, persisted verdict metadata in read-only mode. It cannot calculate a score, change a status, mutate a compliance result, or execute remediation actions.*
+<br />
 
-ComplyLens functions as an evidence and decision governance layer above existing CRM, consent-management, security, and ticketing systems—acting as a control plane rather than a replacement system of record.
+[Quick Start](#-quick-start) · [Architecture](#-architecture) · [Features](#-features) · [Personas](#-user-personas) · [Deploy](#-deployment) · [Security](#-security)
 
----
+<br />
 
-## ✨ Key Features
-
-- **Deterministic Rule Engine:** Evaluates contact records against 5 versioned DPDP controls on a 100-point rubric. Eliminates score hallucination risk using rule-based evaluation logic.
-- **Interactive Rule Trace Studio:** Provides a zero-side-effect sandbox for DPOs to test parameter adjustments in real time. Generates per-control trace matrices and exportable scenario fingerprints.
-- **Context-Isolated AI Briefings:** Uses a server-isolated Mistral LLM to generate summaries bound strictly to persisted verdict metadata. Includes an immediate deterministic fallback engine for high availability.
-- **Cryptographic Audit Log:** Secures event history using append-only SHA-256 hash chaining, transaction locks, and Merkle root verification. Generates portable, tamper-evident JSON proof bundles for compliance audits.
-- **Dry-Run Remediation Simulator:** Projects compliance score shifts and system blast radius before executing CRM database updates. Prevents unintended data mutation during contact remediation cycles.
-- **Incident Operations Center:** Tracks security events against statutory compliance timers, including 72-hour CERT-In and 144-hour internal SLAs. Centralizes evidence logging and generates structured CSV audit exports.
+</div>
 
 ---
 
-## 👥 Operating Model & Personas
+## What is ComplyLens?
 
-- **DPO / Privacy Operations Lead (Primary):** Reviews organization posture, independently approves remediation, monitors retention pressure, coordinates privacy-specific breach obligations, and exports audit evidence.
-- **CRM or Data Steward:** Investigates contact evidence and requests correction. *Cannot approve their own remediation or grant consent for a data principal.*
-- **Incident Response Lead:** Records breach scope and operational milestones while the DPO manages notification evidence.
+ComplyLens is an **evidence and decision layer** built for India's DPDP Act. It connects above your existing CRM, consent management, SIEM, and ticketing systems — via production adapters — without replacing them.
+
+The architecture enforces one invariant:
+
+```
+Rule engine  ──▶  decides every verdict       deterministic · versioned · no exceptions
+Mistral AI   ──▶  explains it afterward       read-only · post-pipeline · no mutations
+Human DPO    ──▶  approves all remediation    nothing changes without explicit sign-off
+```
+
+This is an architectural boundary. AI cannot calculate a score, change a status, mutate a result, or trigger remediation. Ever.
 
 ---
 
-## 🛠️ Tech Stack & Specifications
+## 📸 Screenshots
 
-| Layer | Technologies & Specifications |
+> Add screenshots here once the UI is running.  
+> Place images in `/docs/screenshots/` and link them:
+>
+> ```md
+> ![Dashboard](docs/screenshots/dashboard.png)
+> ![Rule Trace Studio](docs/screenshots/rule-trace.png)
+> ![Incident Command](docs/screenshots/incident.png)
+> ```
+
+---
+
+## 🏗 Architecture
+
+```
+┌─────────────────────────────────────────────┐
+│              Browser / Client               │
+│     Next.js 15 App Router · React 19        │
+│              Recharts · TypeScript          │
+└──────────────────────┬──────────────────────┘
+                       │  HTTPS · HTTP-only signed session cookie
+┌──────────────────────▼──────────────────────┐
+│             Next.js API Routes              │
+│   Auth Middleware · requireSession()        │
+│            Zod body + query validation      │
+└──────────────────────┬──────────────────────┘
+                       │
+          ┌────────────▼────────────┐
+          │   Comparison available? │  ◀── decision gate
+          └──────┬──────────────────┘
+                 │                  │
+               Yes               No / invalid output
+                 │                  │
+    ┌────────────▼──────┐  ┌────────▼──────────────┐
+    │ Structured        │  │ Deterministic local    │
+    │ classifier        │  │ classifier             │
+    └────────────┬──────┘  └────────┬───────────────┘
+                 └────────┬─────────┘
+                          │
+┌─────────────────────────▼───────────────────┐
+│       Schema validation + normalisation     │
+└─────────────────────────┬───────────────────┘
+                          │
+┌─────────────────────────▼───────────────────┐
+│         Deterministic Rule Engine           │
+│  Evidence → Controls → Score → Severity     │
+│  gate → Persist verdict + legal mapping     │
+│                                             │
+│  ⚠  AI does not participate in this stage  │
+└──────────┬───────────────────┬──────────────┘
+           │                   │
+┌──────────▼──────────┐  ┌─────▼────────────────┐
+│   AI Briefing       │  │   Audit Chain         │
+│   Mistral · server  │  │   SHA-256 chained     │
+│   read-only         │  │   Merkle proofs       │
+│   no PII in context │  │   JSON export         │
+└──────────┬──────────┘  └─────┬────────────────┘
+           └────────┬──────────┘
+                    │  Prisma ORM
+┌───────────────────▼─────────────────────────┐
+│                PostgreSQL                   │
+│  ComplianceAssessment · ComplianceResult    │
+│  AuditLog (append-only) · RuleVersion       │
+│  Contact · Incident · MerkleCheckpoint      │
+└───────────────────┬─────────────────────────┘
+                    │  production adapters only
+┌───────────────────▼─────────────────────────┐
+│           External Connectors               │
+│   CRM · Consent Channel · SIEM · Ticketing  │
+│   (source systems remain system of record)  │
+└─────────────────────────────────────────────┘
+```
+
+<details>
+<summary><b>Key architectural decisions</b></summary>
+<br />
+
+| Concern | Decision | Why |
+|---|---|---|
+| Rule evaluation | Deterministic, versioned pipeline | Reproducible verdicts — AI cannot influence any stage |
+| AI access | Read persisted verdicts only | Preserves DPDP auditability; cannot mutate state |
+| Session auth | HTTP-only JOSE cookie · 8 h TTL · SameSite=Lax | No JS token leakage; CSRF protection |
+| Audit chain | SHA-256 chained under serialised DB lock | Detectable tampering; Merkle proofs portable |
+| PII in AI calls | Excluded at API layer | Data minimisation — no personal fields reach model |
+| Schema writes | Append-only in application code | Immutability by convention; DB hardening is Phase 2 |
+
+</details>
+
+---
+
+## ✨ Features
+
+<details>
+<summary><b>🔢 Deterministic DPDP Assessment Engine</b></summary>
+<br />
+
+Five-stage pipeline — Mistral is involved in zero of these stages:
+
+```
+Raw evidence  (CRM · Consent System · SIEM)
+      │
+      ├─ 1. Normalise          →  5 typed inputs
+      ├─ 2. Evaluate controls  →  per-control pass / fail
+      ├─ 3. Score from 100     →  versioned deductions applied
+      ├─ 4. Severity gate      →  block if threshold breached
+      └─ 5. Persist to history →  rule version + legal mapping locked
+
+            ▲ AI reads the persisted result here — never inside the pipeline
+```
+
+Historical verdicts are pinned to their original rule version. Retroactive re-scoring never happens.
+
+</details>
+
+<details>
+<summary><b>🔬 Rule Trace Studio</b></summary>
+<br />
+
+Non-mutating simulation environment — safe to run against production data.
+
+- Live evidence toggles with per-control execution traces
+- Reproducible scenario fingerprint — share exact simulation state
+- Inactive extension preview — test new rules before activation
+
+</details>
+
+<details>
+<summary><b>🛠 Human-Gated Remediation</b></summary>
+<br />
+
+- Impact analysis across the full assessed contact portfolio
+- One open action per contact per failed control — no duplicate tasks
+- Covers: consent · purpose · retention · notice · minimisation
+- Consent flow routes the data principal to an external channel — ComplyLens records only after the verified response syncs back
+
+</details>
+
+<details>
+<summary><b>🤖 Evidence-Grounded AI Briefings</b></summary>
+<br />
+
+- Every insight is rule-cited — no unsupported claims
+- Owned actions with measurable success signals
+- Deterministic fallback — if Mistral is unavailable, the platform keeps working
+- No PII reaches the model — only minimised verdict metadata is sent
+
+</details>
+
+<details>
+<summary><b>🚨 Incident Command Cockpit</b></summary>
+<br />
+
+- 144-hour internal escalation target visibility *(not a statutory deadline — see [legal](#%EF%B8%8F-legal))*
+- Notification evidence tracking
+- Guarded containment and closure — prevents premature status changes
+- CSV reporting · SDF operational review · tamper-evident audit verification
+
+</details>
+
+<details>
+<summary><b>🔗 Tamper-Evident Audit Chain</b></summary>
+<br />
+
+- Every entry is canonically encoded and SHA-256 chained under a serialised DB lock
+- Full chain verification in the DPO view
+- Merkle checkpoints with inclusion proofs
+- Portable JSON proof bundle export — take evidence anywhere
+
+</details>
+
+---
+
+## 👥 User Personas
+
+| Role | Can | Cannot |
+|---|---|---|
+| 🧑‍⚖️ **DPO / Privacy Lead** | Review posture · approve remediation · export audit evidence | — |
+| 🧑‍💼 **CRM / Data Steward** | Investigate contact evidence · request correction | Approve own remediation · grant consent for a data principal |
+| 🧑‍🚒 **Incident Response Lead** | Log breach scope · record operational milestones | Oversee notification evidence (DPO only) |
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+| Tool | Version |
 |---|---|
-| **Frontend** | **Next.js 15 (App Router, Turbopack)**, **React 19**, **TypeScript (Strict Mode)**, **Tailwind CSS v4**, **Recharts**, **Lucide Icons** |
-| **Backend / API** | **Next.js Server Actions & Route Handlers**, **Zod (Runtime Schema Validation)**, **JOSE (JWT Tokens)**, **Bcrypt** |
-| **Database & ORM** | **PostgreSQL (v16)**, **Prisma ORM (v6.19)**, Connection Pooling, Serialized Transaction Locks |
-| **AI / LLM** | **Mistral AI API** (Server-Side Isolation, Zero Direct PII Transmission), Deterministic Offline Fallback Engine |
-| **Security & Auth** | Signed HTTP-only Secure Cookies, Role-Based Access Control (`admin`, `dpo`, `reviewer`, `analyst`), Merkle Trees, SHA-256 Hash Chaining |
-| **Testing & CI/CD** | **Vitest 3.2** (Unit & Integration Suite), **Playwright Core** (Browser Smoke Suite), **ESLint 9**, **Docker** |
+| Node.js | 20+ |
+| PostgreSQL | 14+ (local or Docker) |
+| Mistral API key | [Get one →](https://mistral.ai) |
 
----
-
-## 🔌 Rule-Engine Extension Model
-
-Evidence is normalized into five typed inputs, evaluated by deterministic controls, scored from 100 using versioned deductions, checked by a severity gate, and appended to assessment history with the exact rule version and legal mapping. 
-
-To introduce a new policy:
-1. Map policy evidence into typed inputs.
-2. Implement a typed evaluator/remediation definition.
-3. Publish a database-backed rule version.
-4. Add boundary tests and activate the rule for future assessments.
-5. *Historical verdicts retain their original rule versions permanently.*
-
----
-
-## 🏗️ Architecture & Workflows
-
-### System Architecture Diagram
-
-```mermaid
-flowchart TD
-    UI[Next.js 15 Web Application<br>React 19 Dashboard, Trace Studio & Incident Cockpit] --> API[Next.js API Route Handlers<br>Session Guard, RBAC & Zod Validation]
-    
-    API --> Assess[Assessment Service<br>Batch Orchestration & Transaction Manager]
-    API --> Sim[Simulation & Remediation<br>Impact Forecasting & State Machine]
-    API --> AI[AI Explainer Service<br>Mistral API with Deterministic Fallback]
-    API --> AuditServ[Audit Integrity Service<br>Chain Verification & Merkle Checkpoints]
-
-    Assess <--> Engine[Deterministic Rule Engine<br>DPDP-001 to DPDP-005 Pure Functional Evaluator]
-    
-    Assess --> DB[(PostgreSQL Database<br>Prisma ORM Indexed Tables)]
-    Sim --> DB
-    AuditServ --> DB
-    
-    Assess --> AuditLog[SHA-256 Audit Logger<br>Serialized Hash Chaining]
-    AuditLog --> DB
-    
-    DB -.->|Read-Only Verdict Metadata| AI
-
-```
-
-### Assessment & Governance Sequence
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant DPO as DPO / Privacy Officer
-    participant API as API Handler (/api/assessments/run)
-    participant Service as Assessment Service (lib/assessments)
-    participant Engine as Rules Engine (lib/rules-engine)
-    participant DB as PostgreSQL Database
-    participant Audit as SHA-256 Audit Logger (lib/audit)
-    participant AI as Mistral AI (/api/ai/explain)
-
-    DPO->>API: POST /api/assessments/run (contactIds)
-    API->>Service: runAssessments(contactIds, actorId)
-    Service->>DB: Fetch Contacts, Consents, Purposes & Active Rule Versions
-    DB-->>Service: Return Normalized Contact Evidence
-    Service->>Engine: assessContact(evidence, ruleVersions)
-    Engine-->>Service: Deterministic Scores, Severity Gate & Recommendations
-    Service->>DB: Transactional INSERT (Assessment, Results, Recommendations)
-    Service->>Audit: writeAudit(action, actorId, sequence)
-    Audit->>DB: Compute & Store SHA-256 Chained Hash
-    Service-->>API: Return Assessment Results
-    API-->>DPO: Render Results on Dashboard
-    
-    opt Generate AI Briefing
-        DPO->>AI: POST /api/ai/explain (verdictMetadata)
-        AI->>DB: Read Persisted Verdict (Zero PII)
-        AI-->>DPO: Return Structured Briefing & Remediation Playbook
-    end
-
-```
-
----
-
-## 🚀 Local Setup & Development
-
-### 1. Prerequisites
-
-Ensure you have Node.js 18+ and a running PostgreSQL instance (or Docker) available.
-For workstation setup, an isolated PostgreSQL container can be bound to `127.0.0.1:55432`:
+### 1 — Clone and configure
 
 ```bash
-docker run --name complylens-dev-db -e POSTGRES_PASSWORD=postgres -p 55432:5432 -d postgres:16
-
-```
-
-### 2. Installation Steps
-
-```bash
-# Clone repository
-git clone [https://github.com/VedantVH/SalesForce.git](https://github.com/VedantVH/SalesForce.git)
-cd SalesForce/salesforce
-
-# Copy environment template
+git clone https://github.com/nischala755/salesforce.git
+cd salesforce
 cp .env.example .env.local
-
-# Install dependencies
-npm install
-
-# Run migrations & seed demo dataset
-npm run db:migrate -- --name init
-npm run db:seed
-
-# Start development server
-npm run dev
-
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
-## 🔑 Environment Variables & Demo Access
-
-### Environment Configuration (`.env.local`)
+Open `.env.local` and fill in all five values:
 
 ```env
-DATABASE_URL="postgresql://USER:PASSWORD@127.0.0.1:55432/complylens?sslmode=disable"
-JWT_SECRET="replace-with-at-least-32-random-characters"
-MISTRAL_API_KEY="replace-with-your-mistral-api-key"
-DEMO_ADMIN_PASSWORD="replace-with-a-strong-admin-password"
-DEMO_REVIEWER_PASSWORD="replace-with-a-strong-reviewer-password"
-
+DATABASE_URL          = postgresql://user:pass@localhost:55432/complylens
+JWT_SECRET            = <random-string-minimum-32-characters>
+MISTRAL_API_KEY       = <your-key>
+DEMO_ADMIN_PASSWORD   = <strong-password>
+DEMO_REVIEWER_PASSWORD= <strong-password>
 ```
 
-### Managed Accounts
+> ⚠️ Never prefix any of these with `NEXT_PUBLIC_`. Never commit `.env.local`.
 
-| Role | Email | Password |
-| --- | --- | --- |
-| **Administrator** | `admin@complylens.demo` | Value of `DEMO_ADMIN_PASSWORD` |
-| **DPO Reviewer** | `reviewer@complylens.demo` | Value of `DEMO_REVIEWER_PASSWORD` |
+### 2 — Install, migrate, seed
 
-*Note: Running `npm run db:seed` refreshes password hashes based on these variables without overwriting operational records.*
+```bash
+npm install
+npm run db:migrate -- --name init
+npm run db:seed
+```
+
+### 3 — Run
+
+```bash
+npm run dev
+```
+
+Open **[http://localhost:3000](http://localhost:3000)** and sign in with the [demo accounts](#-demo-accounts).
+
+> A local PostgreSQL container `complylens-dev-db` is bound to `127.0.0.1:55432` for development. Production must supply a managed connection via `DATABASE_URL`.
 
 ---
 
-## 🧪 Testing & Verification Suite
-
-Execute the full suite of automated checks before committing code:
+## 🧪 Testing
 
 ```bash
-# Unit and integration tests
-npm test
-
-# Linter validation
-npm run lint
-
-# Strict TypeScript typechecking
-npm run typecheck
-
-# Production build test
-npm run build
-
-# End-to-End Headless Browser Smoke Test
-npm run smoke:browser
-
+npm test               # Vitest — unit + integration
+npm run lint           # ESLint
+npm run typecheck      # Strict TypeScript check
+npm run build          # Production build verification
+npm run smoke:browser  # Full browser smoke test (Chrome + running server)
 ```
 
-> **Smoke Test Scope:** Runs Playwright/Chrome against a production build (`npm start`) verifying auth, bulk assessments, contact investigation, simulation, remediation lifecycle, incident logging, AI fallback, audit proof export, CSV downloads, and layout stability.
+<details>
+<summary><b>Full smoke test coverage</b></summary>
+<br />
+
+| Area | Status |
+|---|---|
+| Authentication — both roles | ✅ |
+| Bulk assessment run | ✅ |
+| Contact investigation | ✅ |
+| Rule Trace Studio (non-mutating) | ✅ |
+| Purpose-remediation: approve → apply → reassess | ✅ |
+| Incident tracking | ✅ |
+| AI explanation + deterministic fallback | ✅ |
+| Integrity checkpoint creation | ✅ |
+| Merkle proof export (JSON bundle) | ✅ |
+| CSV download | ✅ |
+| Console error detection | ✅ |
+| Mobile overflow — dashboard · list · detail | ✅ |
+
+</details>
 
 ---
 
-## ☁️ Deployment Instructions
+## 📦 Deployment
 
-### Render Deployment (Blueprint)
+### Environment variables
 
-1. Select **New → Blueprint** in Render and connect this repository.
-2. Render will auto-detect `render.yaml`.
-3. Provide `MISTRAL_API_KEY`, `DEMO_ADMIN_PASSWORD`, and `DEMO_REVIEWER_PASSWORD` when prompted (*Never use `NEXT_PUBLIC_` prefixes*).
-4. Render handles database creation, migrations, seed bootstrapping, and building automatically.
-5. Verification URL: `https://complylens.onrender.com/login`
+| Variable | Required | Notes |
+|---|---|---|
+| `DATABASE_URL` | ✅ | Managed PostgreSQL connection string |
+| `JWT_SECRET` | ✅ | Minimum 32 random characters |
+| `MISTRAL_API_KEY` | ✅ | Server-side only — never `NEXT_PUBLIC_` |
+| `DEMO_ADMIN_PASSWORD` | ✅ | Rotate before handling real personal data |
+| `DEMO_REVIEWER_PASSWORD` | ✅ | Rotate before handling real personal data |
 
-*Manual Build/Start Override for Render Free Tier:*
+---
 
-* **Build Command:** `npm ci && npm run db:deploy && npm run db:seed && npm run build`
-* **Start Command:** `npm start`
+<details>
+<summary><b>☁️ Render — Free Tier</b></summary>
+<br />
 
-### Vercel Deployment
+`render.yaml` is included and auto-generates `JWT_SECRET`. Render's free tier does not support pre-deploy commands, so migrations run as part of the build.
 
-1. Provision a managed PostgreSQL database (e.g., Neon, Supabase) and obtain the pooled connection string.
-2. Import the GitHub repository into Vercel.
-3. Set environment variables: `DATABASE_URL`, `JWT_SECRET`, `MISTRAL_API_KEY`, `DEMO_ADMIN_PASSWORD`, `DEMO_REVIEWER_PASSWORD`.
-4. Deploy the application, then execute one-time database setup from your CLI:
+**Steps:**
+
+1. **New → Blueprint** → connect this repository
+2. Confirm Render detects `render.yaml`
+3. Enter `MISTRAL_API_KEY`, `DEMO_ADMIN_PASSWORD`, `DEMO_REVIEWER_PASSWORD` when prompted
+4. Create Blueprint — wait for: migration → bootstrap → build → health check
+5. Open `https://complylens.onrender.com/login`
+
+**Manual build command:**
 ```bash
+npm ci && npm run db:deploy && npm run db:seed && npm run build
+```
+
+**Start command:**
+```bash
+npm start
+```
+
+> On a paid Render plan, move `npm run db:deploy` to the pre-deploy command.
+
+</details>
+
+<details>
+<summary><b>▲ Vercel + Managed Postgres</b></summary>
+<br />
+
+```bash
+# 1. Create a managed PostgreSQL database — copy the pooled connection string
+# 2. Import this repo in Vercel as a Next.js project
+# 3. Add all 5 env vars to the Production environment
+
+# 4. Run migrations once — never use prisma migrate dev in production
 npm run db:deploy
 npm run db:seed
 
+# 5. Deploy from main and verify:
+#    /login · assessment run · remediation approval · /api/audit/integrity
 ```
 
+Vercel redeploys automatically on every push to `main`. Always run production migrations as an explicit CI/CD step before promoting schema-changing releases.
 
+</details>
 
 ---
 
-## 🛡️ Security, Compliance Boundaries & Disclaimers
+## 🔐 Security
 
-* **Audit Chain Bounds:** `ComplianceAssessment`, `ComplianceResult`, and `AuditLog` records are append-only. Cryptographic hash chains ensure tamper detection against application users, but external root anchoring (Phase 2) is required to restrict direct database administrator overwrites.
-* **Session Security:** Session cookies use JOSE-signed tokens, HTTP-only flags, `SameSite=Lax`, 8-hour expiration windows, and strict `Secure` transport in production environments.
-* **Zero-PII AI Boundary:** Mistral receives zero direct PII field data. Data residency and cross-border processing review for external LLM calls must be conducted prior to handling production personal data.
-* **Regulatory Disclaimer:** Penalty calculations and SLAs (144-hour internal escalation targets) provided in the UI serve as operational aids and illustrative metrics. They do not constitute legal certification or liability predictions.
+<details>
+<summary><b>Security controls</b></summary>
+<br />
+
+| Control | Status |
+|---|---|
+| `requireSession()` + middleware outer guard on every route | ✅ Active |
+| HTTP-only · SameSite=Lax · JOSE-signed · 8 h TTL · Secure in prod | ✅ Active |
+| Zod validation on all incoming bodies and queries | ✅ Active |
+| Mistral server-side only — zero API key in browser bundle | ✅ Active |
+| Personal fields excluded from all model inputs | ✅ Active |
+| SHA-256 audit chain + Merkle checkpoints | ✅ Active |
+| DB-level immutability (triggers · restricted roles · WORM) | 🔲 Phase 2 |
+| External root anchoring for the audit chain | 🔲 Phase 2 |
+| LLM data-residency + cross-border transfer review | 🔲 Phase 2 |
+
+> The hash chain makes tampering **detectable** — it does not prevent a sufficiently privileged database operator from rewriting data and recomputing hashes. External root anchoring is a Phase 2 hardening item.
+
+</details>
 
 ---
 
-## 🤝 Contributing & License
+## 🔑 Demo Accounts
 
-Contributions and issue tracking are managed through the primary repository.
+| Role | Email | Password source |
+|---|---|---|
+| Administrator | `admin@complylens.demo` | `DEMO_ADMIN_PASSWORD` env var |
+| DPO Reviewer | `reviewer@complylens.demo` | `DEMO_REVIEWER_PASSWORD` env var |
 
-Distributed under the **MIT License**. See `LICENSE` for details.
+The seed script refreshes both password hashes from env vars on every run. Operational records are never overwritten on re-seed. **Remove or rotate both accounts before handling real personal data.**
 
-```
+---
 
-```
+## 🗺 Roadmap
+
+**Phase 2 — Hardening**
+
+- [ ] DB-level immutability — triggers, restricted roles, or WORM storage
+- [ ] External root anchoring for the SHA-256 audit chain
+- [ ] LLM data-residency review — vendor terms, transfer basis, retention config, region selection
+- [ ] Production connector adapters — CRM, consent management, SIEM, ticketing
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 15 (App Router) |
+| UI | React 19 |
+| Language | TypeScript — strict mode |
+| ORM | Prisma |
+| Database | PostgreSQL |
+| AI Engine | Mistral (server-side only) |
+| Charts | Recharts |
+| Auth | JOSE-signed HTTP-only cookies |
+| Validation | Zod |
+| Testing | Vitest + browser smoke tests |
+
+---
+
+## ⚖️ Legal
+
+| Item | Clarification |
+|---|---|
+| Penalty figures | Illustrative operational context only — not a prediction of actual liability |
+| SDF mode | An operational setting — does not legally determine SDF classification (depends on government notification) |
+| 144-hour timer | An internal escalation target, not a statutory deadline |
+| This software | An operational aid, not legal certification or legal advice |
+
+**Have qualified legal counsel validate all rule mappings and deployment controls before using this system with real personal data.**
+
+---
+
+## 📄 License
+
+Proprietary — all rights reserved.
+
+---
+
+<div align="center">
+<sub>Built with Next.js 15 · React 19 · TypeScript · Prisma · PostgreSQL · Mistral AI · Vitest</sub>
+</div>
