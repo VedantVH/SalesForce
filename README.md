@@ -185,13 +185,3 @@ npm run smoke:browser
 ## 🤝 Contributing & License
 
 Contributions, issues, and feature requests are welcome. Feel free to review open items on the [issues page](https://github.com/VedantVH/SalesForce/issues).
-
-Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for details.
-
----
-
-## 📬 Contact & Links
-
-- **Author:** Vedant Vishwanath Honnangi
-- **GitHub:** [@VedantVH](https://github.com/VedantVH)
-- **Repository:** [https://github.com/VedantVH/SalesForce](https://github.com/VedantVH/SalesForce)
